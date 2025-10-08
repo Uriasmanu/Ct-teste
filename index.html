@@ -1,1845 +1,677 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CT Império - Centro de Treinamento de Lutas</title>
-    <style>
-        /* RESET E ESTILOS GLOBAIS */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        :root {
-            --preto: #121212;
-            --dourado: #D4AF37;
-            --vermelho: #B22222;
-            --branco: #FFFFFF;
-            --cinza-escuro: #2A2A2A;
-            --cinza-claro: #F5F5F5;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--preto);
-            color: var(--branco);
-            line-height: 1.6;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        section {
-            padding: 80px 0;
-        }
-
-        h1, h2, h3, h4 {
-            color: var(--dourado);
-            margin-bottom: 20px;
-        }
-
-        p {
-            margin-bottom: 15px;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--vermelho);
-            color: var(--branco);
-            padding: 12px 25px;
-            border: none;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background-color: var(--dourado);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background-color: var(--vermelho);
-        }
-
-        /* HEADER E NAVEGAÇÃO */
-        header {
-            background-color: var(--preto);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo h1 {
-            font-size: 1.8rem;
-            margin: 0;
-            color: var(--dourado);
-        }
-
-        .logo span {
-            color: var(--vermelho);
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin-left: 30px;
-        }
-
-        .nav-links a {
-            color: var(--branco);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: var(--dourado);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--dourado);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: var(--branco);
-            font-size: 1.5rem;
-        }
-
-        /* HERO SECTION */
-        .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            padding-top: 80px;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            color: var(--branco);
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            color: var(--branco);
-        }
-
-        .hero .btn {
-            margin: 0 10px;
-        }
-
-        /* SOBRE SECTION */
-        .sobre {
-            background-color: var(--cinza-escuro);
-        }
-
-        .sobre-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .sobre-img {
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .sobre-img img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* PROFESSOR SECTION */
-        .professor {
-            background-color: var(--preto);
-        }
-
-        .professor-content {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .professor-img {
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .professor-img img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .professor-info h3 {
-            color: var(--dourado);
-            margin-bottom: 10px;
-        }
-
-        .professor-info p {
-            margin-bottom: 20px;
-        }
-
-        /* AULA EM ANDAMENTO */
-        .aula-atual {
-            background-color: var(--cinza-escuro);
-            text-align: center;
-        }
-
-        .aula-info {
-            background-color: var(--preto);
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            margin-bottom: 30px;
-        }
-
-        .aula-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--dourado);
-        }
-
-        .aula-info p {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-        }
-
-        .progress-container {
-            width: 100%;
-            height: 20px;
-            background-color: var(--cinza-escuro);
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 20px 0;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background-color: var(--vermelho);
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-
-        .horarios {
-            display: flex;
-            justify-content: space-between;
-            font-weight: bold;
-        }
-
-        /* MODALIDADES SECTION */
-        .modalidades {
-            background-color: var(--preto);
-        }
-
-        .modalidades-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .modalidade-card {
-            background-color: var(--cinza-escuro);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .modalidade-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .modalidade-icon {
-            background-color: var(--vermelho);
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            color: var(--branco);
-        }
-
-        .modalidade-content {
-            padding: 25px;
-        }
-
-        .modalidade-content h3 {
-            color: var(--dourado);
-            margin-bottom: 15px;
-        }
-
-        /* GRADE DE HORÁRIOS */
-        .grade-horarios {
-            background-color: var(--cinza-escuro);
-        }
-
-        .tabela-horarios {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 30px;
-        }
-
-        .tabela-horarios th, .tabela-horarios td {
-            padding: 15px;
-            text-align: center;
-            border: 1px solid var(--cinza-claro);
-        }
-
-        .tabela-horarios th {
-            background-color: var(--vermelho);
-            color: var(--branco);
-            font-weight: bold;
-        }
-
-        .tabela-horarios tr:nth-child(even) {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .tabela-horarios tr:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        /* LOJA SECTION */
-        .loja {
-            background-color: var(--preto);
-        }
-
-        .produtos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .produto-card {
-            background-color: var(--cinza-escuro);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .produto-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .produto-img {
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .produto-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .produto-card:hover .produto-img img {
-            transform: scale(1.1);
-        }
-
-        .produto-info {
-            padding: 20px;
-        }
-
-        .produto-info h3 {
-            color: var(--dourado);
-            margin-bottom: 10px;
-        }
-
-        .produto-preco {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--vermelho);
-            margin-bottom: 15px;
-        }
-
-        .carrinho {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            background-color: var(--cinza-escuro);
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            width: 300px;
-            display: none;
-            z-index: 999;
-        }
-
-        .carrinho.ativo {
-            display: block;
-        }
-
-        .carrinho h3 {
-            margin-bottom: 15px;
-            color: var(--dourado);
-        }
-
-        .carrinho-itens {
-            max-height: 300px;
-            overflow-y: auto;
-            margin-bottom: 15px;
-        }
-
-        .carrinho-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .carrinho-total {
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            text-align: right;
-        }
-
-        /* GALERIA SECTION */
-        .galeria {
-            background-color: var(--cinza-escuro);
-        }
-
-        .galeria-filtros {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .filtro-btn {
-            background: none;
-            border: 1px solid var(--dourado);
-            color: var(--dourado);
-            padding: 8px 15px;
-            margin: 0 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .filtro-btn:hover, .filtro-btn.ativo {
-            background-color: var(--dourado);
-            color: var(--preto);
-        }
-
-        .galeria-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-        }
-
-        .galeria-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            height: 200px;
-            cursor: pointer;
-        }
-
-        .galeria-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .galeria-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1001;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .lightbox.ativo {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .lightbox-img {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
-        }
-
-        .lightbox-fechar {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            color: var(--branco);
-            font-size: 2rem;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-
-        /* VÍDEOS SECTION */
-        .videos {
-            background-color: var(--preto);
-        }
-
-        .videos-filtros {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .videos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .video-card {
-            background-color: var(--cinza-escuro);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .video-thumb {
-            position: relative;
-            height: 180px;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .video-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .play-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: var(--branco);
-            font-size: 3rem;
-            opacity: 0.8;
-            transition: opacity 0.3s ease;
-        }
-
-        .video-thumb:hover .play-icon {
-            opacity: 1;
-        }
-
-        .video-info {
-            padding: 20px;
-        }
-
-        .video-info h3 {
-            color: var(--dourado);
-            margin-bottom: 10px;
-        }
-
-        .video-player {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1001;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .video-player.ativo {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .video-container {
-            width: 80%;
-            max-width: 800px;
-            position: relative;
-        }
-
-        .video-container iframe {
-            width: 100%;
-            height: 450px;
-            border: none;
-        }
-
-        .video-fechar {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            color: var(--branco);
-            font-size: 2rem;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-
-        /* FAQ SECTION */
-        .faq {
-            background-color: var(--cinza-escuro);
-        }
-
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            margin-bottom: 15px;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .faq-pergunta {
-            background-color: var(--preto);
-            padding: 20px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background-color 0.3s ease;
-        }
-
-        .faq-pergunta:hover {
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-
-        .faq-pergunta h3 {
-            margin: 0;
-            font-size: 1.1rem;
-        }
-
-        .faq-icon {
-            font-size: 1.2rem;
-            transition: transform 0.3s ease;
-        }
-
-        .faq-item.ativo .faq-icon {
-            transform: rotate(45deg);
-        }
-
-        .faq-resposta {
-            background-color: var(--preto);
-            padding: 0 20px;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .faq-item.ativo .faq-resposta {
-            padding: 20px;
-            max-height: 500px;
-        }
-
-        /* CONTATO SECTION */
-        .contato {
-            background-color: var(--preto);
-        }
-
-        .contato-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-        }
-
-        .contato-info h3 {
-            color: var(--dourado);
-            margin-bottom: 20px;
-        }
-
-        .contato-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .contato-icon {
-            margin-right: 15px;
-            color: var(--vermelho);
-            font-size: 1.2rem;
-            width: 20px;
-            text-align: center;
-        }
-
-        .contato-form input,
-        .contato-form textarea {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            background-color: var(--cinza-escuro);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            color: var(--branco);
-        }
-
-        .contato-form textarea {
-            height: 150px;
-            resize: vertical;
-        }
-
-        .mapa {
-            margin-top: 40px;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .mapa iframe {
-            width: 100%;
-            height: 400px;
-            border: none;
-        }
-
-        /* FOOTER */
-        footer {
-            background-color: var(--cinza-escuro);
-            padding: 50px 0 20px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .footer-col h3 {
-            color: var(--dourado);
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-
-        .footer-links a {
-            color: var(--branco);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--dourado);
-        }
-
-        .redes-sociais {
-            display: flex;
-            gap: 15px;
-        }
-
-        .rede-social {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            background-color: var(--preto);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--branco);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .rede-social:hover {
-            background-color: var(--vermelho);
-            transform: translateY(-3px);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* RESPONSIVIDADE */
-        @media (max-width: 992px) {
-            .sobre-content, .professor-content, .contato-container {
-                grid-template-columns: 1fr;
-            }
-
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                position: fixed;
-                top: 70px;
-                right: -100%;
-                width: 70%;
-                height: calc(100vh - 70px);
-                background-color: var(--preto);
-                flex-direction: column;
-                align-items: center;
-                padding-top: 50px;
-                transition: right 0.3s ease;
-                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
-            }
-
-            .nav-links.ativo {
-                right: 0;
-            }
-
-            .nav-links li {
-                margin: 15px 0;
-            }
-
-            .hamburger {
-                display: block;
-            }
-
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-
-            .tabela-horarios {
-                font-size: 0.9rem;
-            }
-
-            .carrinho {
-                width: 90%;
-                right: 5%;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            .modalidades-grid, .produtos-grid, .galeria-grid, .videos-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .tabela-horarios th, .tabela-horarios td {
-                padding: 10px 5px;
-                font-size: 0.8rem;
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CT Império - Centro de Treinamento de Lutas</title>
+  <meta name="description" content="CT Império - Jiu-Jitsu, Muay Thai e Boxe | Treinos, loja, galeria, vídeos e contato" />
+  <!-- Fonts could be loaded in production; here we use system fonts for performance -->
+  <style>
+    /* ==========================
+       VARIÁVEIS DE CORES E RESET
+       ========================== */
+    :root{
+      --bg:#0b0b0b; /* preto profundo */
+      --muted:#1a1a1a;
+      --gold:#c59a35; /* dourado */
+      --gold-2:#b8872f;
+      --accent:#c62828; /* vermelho marcial */
+      --text:#eee;
+      --glass: rgba(255,255,255,0.03);
+      --card-shadow: 0 6px 18px rgba(0,0,0,0.6);
+      --radius:12px;
+      --transition:all .28s cubic-bezier(.2,.9,.3,1);
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      background: linear-gradient(180deg,var(--bg),#040404);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      font-size:16px;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}/* ==========================
+   NAVEGAÇÃO FIXA
+   ========================== */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  backdrop-filter: blur(6px);
+  background:linear-gradient(180deg, rgba(10,10,10,0.85), rgba(10,10,10,0.6));
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  box-shadow:0 4px 18px rgba(0,0,0,0.6);
+}
+.container{max-width:1200px;margin:0 auto;padding:0 1rem}
+.nav{
+  display:flex;align-items:center;justify-content:space-between;padding:.8rem 0;
+}
+.brand{display:flex;align-items:center;gap:.8rem}
+.logo{
+  width:48px;height:48px;border-radius:10px;padding:6px;background:linear-gradient(135deg,var(--gold),var(--gold-2));display:flex;align-items:center;justify-content:center;color:#0b0b0b;font-weight:800;box-shadow:var(--card-shadow)
+}
+nav ul{display:flex;gap:1rem;align-items:center;margin:0;padding:0;list-style:none}
+nav li a{padding:.45rem .7rem;border-radius:8px;font-weight:600}
+nav li a:hover{background:var(--glass);transform:translateY(-2px)}
+.cta{background:linear-gradient(90deg,var(--accent),#a71b1b);padding:.5rem .85rem;border-radius:8px;color:#fff;font-weight:700}
+.hamburger{display:none}
+
+/* ==========================
+   HERO
+   ========================== */
+.hero{
+  min-height:78vh;display:grid;grid-template-columns:1fr 420px;gap:2rem;align-items:center;padding-top:86px;
+}
+.hero-left{padding:2rem;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:18px}
+.eyebrow{color:var(--gold);font-weight:700;letter-spacing:1px}
+h1{font-size:2.4rem;margin:.4rem 0 0;line-height:1.05}
+p.lead{color:#cfcfcf;margin-top:.6rem}
+.hero-actions{display:flex;gap:.8rem;margin-top:1.2rem}
+.btn{background:transparent;border:2px solid rgba(255,255,255,0.06);padding:.7rem 1rem;border-radius:10px;font-weight:700;cursor:pointer}
+.btn.primary{background:linear-gradient(90deg,var(--gold),var(--gold-2));color:#0b0b0b;border:0}
+
+.hero-right{position:relative;border-radius:18px;overflow:hidden;box-shadow:var(--card-shadow)}
+.hero-right .cover{height:420px;background-image:linear-gradient(180deg,rgba(0,0,0,0.2),rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=1d0b6b0f299a9e1f3e0b97958a3b1613');background-size:cover;background-position:center}
+.hero-overlay{position:absolute;left:0;right:0;bottom:0;padding:1rem;background:linear-gradient(180deg,transparent, rgba(0,0,0,0.65));color:#fff}
+
+/* ==========================
+   AULA EM ANDAMENTO (DYNAMIC)
+   ========================== */
+.live-card{Background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));padding:1rem;border-radius:12px;display:flex;flex-direction:column;gap:.6rem}
+.progress{height:14px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:hidden}
+.progress > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--gold));transition:width .5s ease}
+.schedule-meta{display:flex;justify-content:space-between;font-weight:700}
+
+/* ==========================
+   SEÇÕES
+   ========================== */
+section{padding:3.2rem 0}
+.section-title{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+.section-title h2{margin:0}
+
+/* ==========================
+   MODALIDADES
+   ========================== */
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.mode{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:1.2rem;border-radius:12px;text-align:center;box-shadow:var(--card-shadow)}
+.icon{width:72px;height:72px;border-radius:18px;display:inline-flex;align-items:center;justify-content:center;font-weight:800;background:rgba(0,0,0,0.25);margin-bottom:.6rem}
+.timetable{margin-top:1rem;background:var(--muted);padding:1rem;border-radius:10px}
+.timetable table{width:100%;border-collapse:collapse;color:#ddd}
+.timetable th, .timetable td{padding:.5rem;text-align:left;border-bottom:1px solid rgba(255,255,255,0.03)}
+
+/* ==========================
+   LOJA
+   ========================== */
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+.product{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:1rem;border-radius:12px}
+.product .thumb{height:180px;border-radius:10px;overflow:hidden;margin-bottom:.6rem}
+.product h4{margin:.4rem 0}
+.product .price{font-weight:800;color:var(--gold)}
+.cart{position:fixed;right:18px;bottom:18px;background:var(--gold);color:#0b0b0b;padding:.8rem;border-radius:999px;box-shadow:0 8px 30px rgba(0,0,0,0.6);z-index:999}
+.cart-bubble{background:var(--accent);color:#fff;border-radius:999px;padding:.2rem .45rem;margin-left:.4rem;font-weight:800}
+
+/* ==========================
+   GALERIA
+   ========================== */
+.filters{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1rem}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.6rem}
+.gallery-item{position:relative;border-radius:10px;overflow:hidden;cursor:pointer}
+.gallery-item img{width:100%;height:220px;object-fit:cover;display:block}
+
+/* lightbox */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;padding:2rem;z-index:2000}
+.lightbox img{max-width:90%;max-height:80%;border-radius:10px}
+
+/* ==========================
+   VÍDEOS
+   ========================== */
+.videos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.video-card{background:var(--muted);padding:1rem;border-radius:12px}
+
+/* ==========================
+   FAQ
+   ========================== */
+.faq .item{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:10px;padding:.8rem;margin-bottom:.6rem}
+.faq summary{cursor:pointer;font-weight:800}
+
+/* ==========================
+   CONTATO
+   ========================== */
+.contact-grid{display:grid;grid-template-columns:1fr 380px;gap:1rem}
+.contact-card{background:var(--muted);padding:1rem;border-radius:12px}
+.socials{display:flex;gap:.6rem}
+.contact a{color:var(--gold);font-weight:700}
+
+footer{padding:1.6rem 0;border-top:1px solid rgba(255,255,255,0.03);text-align:center;color:#aaa}
+
+/* ==========================
+   RESPONSIVO
+   ========================== */
+@media (max-width:980px){
+  .hero{grid-template-columns:1fr;min-height:72vh}
+  nav ul{display:none}
+  .hamburger{display:block}
+  .hero-right .cover{height:320px}
+  .contact-grid{grid-template-columns:1fr}
+}
+
+@media (max-width:600px){
+  h1{font-size:1.6rem}
+  .logo{width:44px;height:44px}
+}
+
+/* ==========================
+   MICRO-INTERAÇÕES
+   ========================== */
+.btn:hover{transform:translateY(-3px)}
+.product .thumb img{transition:transform .6s var(--transition)}
+.product .thumb:hover img{transform:scale(1.05)}
+
+  </style>
 </head>
 <body>
-    <!-- HEADER -->
-    <header>
-        <div class="container">
-            <nav class="navbar">
-                <div class="logo">
-                    <h1>CT <span>Império</span></h1>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="#inicio">Início</a></li>
-                    <li><a href="#sobre">Sobre</a></li>
-                    <li><a href="#modalidades">Modalidades</a></li>
-                    <li><a href="#loja">Loja</a></li>
-                    <li><a href="#galeria">Galeria</a></li>
-                    <li><a href="#videos">Vídeos</a></li>
-                    <li><a href="#faq">FAQ</a></li>
-                    <li><a href="#contato">Contato</a></li>
-                    <li><a href="#" id="carrinho-toggle">Carrinho (<span id="carrinho-count">0</span>)</a></li>
-                </ul>
-                <button class="hamburger">☰</button>
-            </nav>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo">CI</div>
+        <div>
+          <div style="font-weight:900">CT Império</div>
+          <div style="font-size:.8rem;color:#cfcfcf">Centro de Treinamento de Lutas</div>
         </div>
-    </header>
+      </div><nav aria-label="Menu principal">
+    <ul>
+      <li><a href="#inicio">Início</a></li>
+      <li><a href="#modalidades">Modalidades</a></li>
+      <li><a href="#loja">Loja</a></li>
+      <li><a href="#galeria">Galeria</a></li>
+      <li><a href="#videos">Vídeos</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </nav>
 
-    <!-- CARRINHO -->
-    <div class="carrinho" id="carrinho">
-        <h3>Seu Carrinho</h3>
-        <div class="carrinho-itens" id="carrinho-itens">
-            <!-- Itens do carrinho serão adicionados aqui dinamicamente -->
-        </div>
-        <div class="carrinho-total" id="carrinho-total">Total: R$ 0,00</div>
-        <button class="btn" id="finalizar-compra">Finalizar Compra</button>
+  <div style="display:flex;align-items:center;gap:.8rem">
+    <a class="cta" href="#matricule">Matricule-se</a>
+    <button class="hamburger" aria-label="Abrir menu">☰</button>
+  </div>
+</div>
+
+  </header>  <main class="container" id="inicio" style="padding-top:1rem">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-left">
+        <div class="eyebrow">CT Império</div>
+        <h1>Treine forte. Treine com propósito. Seja do Império.</h1>
+        <p class="lead">Centro de treinamentos de Jiu-Jitsu, Muay Thai e Boxe. Ambiente profissional, seguro e focado em formar atletas e praticantes disciplinados.</p><div class="hero-actions">
+      <a class="btn primary" href="#modalidades">Conheça as modalidades</a>
+      <button class="btn" onclick="document.getElementById('contato').scrollIntoView({behavior:'smooth'})">Fale conosco</button>
     </div>
 
-    <!-- HERO SECTION -->
-    <section class="hero" id="inicio">
-        <div class="container">
-            <div class="hero-content">
-                <h1>CT IMPÉRIO - CENTRO DE TREINAMENTO DE LUTAS</h1>
-                <p>Excelência em artes marciais há mais de 15 anos. Formando campeões dentro e fora do tatame.</p>
-                <a href="#modalidades" class="btn">Conheça Nossas Modalidades</a>
-                <a href="#contato" class="btn">Faça Uma Aula Experimental</a>
-            </div>
+    <div style="margin-top:1.4rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+      <!-- Cartão Live -->
+      <div class="live-card" aria-live="polite">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-size:.85rem;color:#ddd">Aula em Andamento</div>
+            <div id="live-title" style="font-weight:900;font-size:1.05rem">—</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:.75rem;color:#bbb">Agora</div>
+            <div id="live-time" style="font-weight:800">00:00</div>
+          </div>
         </div>
-    </section>
-
-    <!-- SOBRE SECTION -->
-    <section class="sobre" id="sobre">
-        <div class="container">
-            <h2 class="section-title">Sobre o CT Império</h2>
-            <div class="sobre-content">
-                <div class="sobre-img">
-                    <img src="https://images.unsplash.com/photo-1599058917765-a780eda07a3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="CT Império">
-                </div>
-                <div class="sobre-texto">
-                    <h3>Nossa História</h3>
-                    <p>Fundado em 2008, o CT Império nasceu da paixão pelo ensino das artes marciais e do desejo de criar um espaço onde alunos pudessem desenvolver não apenas habilidades de luta, mas também valores como disciplina, respeito e superação.</p>
-                    <p>Com mais de uma década de experiência, nos consolidamos como uma referência no ensino de Jiu-Jitsu, Muay Thai e Boxe, formando atletas campeões e, principalmente, cidadãos de caráter.</p>
-                    <h3>Nossa Filosofia</h3>
-                    <p>Acreditamos que as artes marciais são um caminho para o desenvolvimento integral do ser humano. Além da técnica, valorizamos o crescimento pessoal, a saúde física e mental, e a construção de relacionamentos baseados no respeito mútuo.</p>
-                </div>
-            </div>
+        <div class="progress" aria-hidden="false" style="margin-top:.8rem">
+          <i id="live-progress"></i>
         </div>
-    </section>
-
-    <!-- PROFESSOR SECTION -->
-    <section class="professor">
-        <div class="container">
-            <h2 class="section-title">Nosso Professor</h2>
-            <div class="professor-content">
-                <div class="professor-img">
-                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Professor Mestre Silva">
-                </div>
-                <div class="professor-info">
-                    <h3>Mestre Silva</h3>
-                    <p><strong>Faixa Preta 4º Grau de Jiu-Jitsu</strong></p>
-                    <p>Com mais de 20 anos de experiência no mundo das artes marciais, Mestre Silva é referência no ensino de Jiu-Jitsu e defesa pessoal. Formado pela renomada academia Gracie, já treinou diversos campeões em competições nacionais e internacionais.</p>
-                    <p>Além de sua expertise técnica, Mestre Silva é conhecido por sua abordagem pedagógica que valoriza o desenvolvimento individual de cada aluno, adaptando o ensino às necessidades e objetivos de cada um.</p>
-                    <p><strong>Principais Conquistas:</strong></p>
-                    <ul>
-                        <li>Campeão Brasileiro de Jiu-Jitsu (2005, 2007, 2009)</li>
-                        <li>Campeão Pan-Americano (2008)</li>
-                        <li>Faixa Preta concedida por Mestre Carlson Gracie</li>
-                        <li>Mais de 100 alunos formados faixa preta</li>
-                    </ul>
-                </div>
-            </div>
+        <div class="schedule-meta">
+          <div id="live-start">—</div>
+          <div id="live-end">—</div>
         </div>
-    </section>
+      </div>
 
-    <!-- AULA EM ANDAMENTO -->
-    <section class="aula-atual">
-        <div class="container">
-            <h2 class="section-title">Aula em Andamento</h2>
-            <div class="aula-info">
-                <h3 id="aula-titulo">Jiu-Jitsu - Adultos</h3>
-                <p id="aula-horario">18:00 - 19:30</p>
-                <p id="aula-professor">Professor: Mestre Silva</p>
-                <div class="progress-container">
-                    <div class="progress-bar" id="progresso-aula"></div>
-                </div>
-                <div class="horarios">
-                    <span id="horario-inicio">18:00</span>
-                    <span id="horario-fim">19:30</span>
-                </div>
-            </div>
-            <div class="proxima-aula">
-                <h3>Próxima Aula</h3>
-                <p id="proxima-aula-titulo">Muay Thai - Intermediário</p>
-                <p id="proxima-aula-horario">19:30 - 20:30</p>
-            </div>
+      <!-- Professor / Dono -->
+      <div class="live-card" style="align-items:center;gap:.6rem">
+        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=5f6c9e7da3d2e8f0b1c4f3f5e3b3e6a9" alt="Professor" style="width:84px;height:84px;border-radius:12px;object-fit:cover">
+        <div style="text-align:center">
+          <div style="font-weight:900">Prof. Rafael "Imperador" Silva</div>
+          <div style="font-size:.85rem;color:#ddd">Faixa-preta de Jiu-Jitsu / Treinador especialista em striking</div>
+          <div style="margin-top:.6rem;font-size:.9rem;color:#ccc">Com mais de 15 anos de experiência, atua em preparação técnica e física para competições e alunos iniciantes.</div>
         </div>
-    </section>
-
-    <!-- MODALIDADES SECTION -->
-    <section class="modalidades" id="modalidades">
-        <div class="container">
-            <h2 class="section-title">Modalidades</h2>
-            <div class="modalidades-grid">
-                <div class="modalidade-card">
-                    <div class="modalidade-icon">🥋</div>
-                    <div class="modalidade-content">
-                        <h3>Jiu-Jitsu</h3>
-                        <p>Arte marcial brasileira focada em técnicas de solo, finalizações e controle. Ideal para defesa pessoal, condicionamento físico e desenvolvimento mental.</p>
-                        <ul>
-                            <li>Turmas para todas as idades</li>
-                            <li>Treinos técnicos e sparring</li>
-                            <li>Preparação para competições</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="modalidade-card">
-                    <div class="modalidade-icon">🥊</div>
-                    <div class="modalidade-content">
-                        <h3>Muay Thai</h3>
-                        <p>Arte marcial tailandesa conhecida como "a arte das oito armas". Desenvolve força, resistência, agilidade e coordenação motora.</p>
-                        <ul>
-                            <li>Técnicas de socos, chutes, cotoveladas e joelhadas</li>
-                            <li>Condicionamento físico intenso</li>
-                            <li>Defesa pessoal eficiente</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="modalidade-card">
-                    <div class="modalidade-icon">👊</div>
-                    <div class="modalidade-content">
-                        <h3>Boxe</h3>
-                        <p>Esporte de combate que utiliza apenas os punhos. Excelente para condicionamento cardiovascular, coordenação e reflexos.</p>
-                        <ul>
-                            <li>Técnicas de socos e esquivas</li>
-                            <li>Treino de velocidade e potência</li>
-                            <li>Exercícios específicos para boxe</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- GRADE DE HORÁRIOS -->
-    <section class="grade-horarios">
-        <div class="container">
-            <h2 class="section-title">Grade de Horários</h2>
-            <table class="tabela-horarios">
-                <thead>
-                    <tr>
-                        <th>Horário</th>
-                        <th>Segunda</th>
-                        <th>Terça</th>
-                        <th>Quarta</th>
-                        <th>Quinta</th>
-                        <th>Sexta</th>
-                        <th>Sábado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>07:00 - 08:00</td>
-                        <td>Jiu-Jitsu</td>
-                        <td>Muay Thai</td>
-                        <td>Jiu-Jitsu</td>
-                        <td>Muay Thai</td>
-                        <td>Jiu-Jitsu</td>
-                        <td>Jiu-Jitsu</td>
-                    </tr>
-                    <tr>
-                        <td>09:00 - 10:00</td>
-                        <td>Boxe</td>
-                        <td>Jiu-Jitsu</td>
-                        <td>Boxe</td>
-                        <td>Jiu-Jitsu</td>
-                        <td>Boxe</td>
-                        <td>Muay Thai</td>
-                    </tr>
-                    <tr>
-                        <td>18:00 - 19:00</td>
-                        <td>Jiu-Jitsu</td>
-                        <td>Muay Thai</td>
-                        <td>Jiu-Jitsu</td>
-                        <td>Muay Thai</td>
-                        <td>Jiu-Jitsu</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>19:00 - 20:00</td>
-                        <td>Muay Thai</td>
-                        <td>Boxe</td>
-                        <td>Muay Thai</td>
-                        <td>Boxe</td>
-                        <td>Muay Thai</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>20:00 - 21:00</td>
-                        <td>Boxe</td>
-                        <td>Jiu-Jitsu</td>
-                        <td>Boxe</td>
-                        <td>Jiu-Jitsu</td>
-                        <td>Boxe</td>
-                        <td>-</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- LOJA SECTION -->
-    <section class="loja" id="loja">
-        <div class="container">
-            <h2 class="section-title">Nossa Loja</h2>
-            <div class="produtos-grid">
-                <div class="produto-card">
-                    <div class="produto-img">
-                        <img src="https://images.unsplash.com/photo-1548123370-91f61de39a0f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Kimono Jiu-Jitsu">
-                    </div>
-                    <div class="produto-info">
-                        <h3>Kimono Jiu-Jitsu</h3>
-                        <p>Kimono de alta qualidade para treinos e competições.</p>
-                        <div class="produto-preco">R$ 249,90</div>
-                        <button class="btn adicionar-carrinho" data-id="1" data-nome="Kimono Jiu-Jitsu" data-preco="249.90">Adicionar ao Carrinho</button>
-                    </div>
-                </div>
-                <div class="produto-card">
-                    <div class="produto-img">
-                        <img src="https://images.unsplash.com/photo-1594736797933-d0f289d3ee0a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Luvas de Boxe">
-                    </div>
-                    <div class="produto-info">
-                        <h3>Luvas de Boxe</h3>
-                        <p>Luvas profissionais para treino de boxe e muay thai.</p>
-                        <div class="produto-preco">R$ 189,90</div>
-                        <button class="btn adicionar-carrinho" data-id="2" data-nome="Luvas de Boxe" data-preco="189.90">Adicionar ao Carrinho</button>
-                    </div>
-                </div>
-                <div class="produto-card">
-                    <div class="produto-img">
-                        <img src="https://images.unsplash.com/photo-1580261450046-d0a30080dc9b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Faixa Jiu-Jitsu">
-                    </div>
-                    <div class="produto-info">
-                        <h3>Faixa de Jiu-Jitsu</h3>
-                        <p>Faixa oficial para graduação em Jiu-Jitsu.</p>
-                        <div class="produto-preco">R$ 39,90</div>
-                        <button class="btn adicionar-carrinho" data-id="3" data-nome="Faixa de Jiu-Jitsu" data-preco="39.90">Adicionar ao Carrinho</button>
-                    </div>
-                </div>
-                <div class="produto-card">
-                    <div class="produto-img">
-                        <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Camiseta CT Império">
-                    </div>
-                    <div class="produto-info">
-                        <h3>Camiseta CT Império</h3>
-                        <p>Camiseta oficial do CT Império.</p>
-                        <div class="produto-preco">R$ 59,90</div>
-                        <button class="btn adicionar-carrinho" data-id="4" data-nome="Camiseta CT Império" data-preco="59.90">Adicionar ao Carrinho</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- GALERIA SECTION -->
-    <section class="galeria" id="galeria">
-        <div class="container">
-            <h2 class="section-title">Galeria</h2>
-            <div class="galeria-filtros">
-                <button class="filtro-btn ativo" data-filtro="todos">Todos</button>
-                <button class="filtro-btn" data-filtro="eventos">Eventos</button>
-                <button class="filtro-btn" data-filtro="equipes">Equipes</button>
-                <button class="filtro-btn" data-filtro="aulas">Aulas</button>
-                <button class="filtro-btn" data-filtro="estrutura">Estrutura</button>
-            </div>
-            <div class="galeria-grid">
-                <div class="galeria-item" data-categoria="eventos">
-                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Competição de Jiu-Jitsu">
-                </div>
-                <div class="galeria-item" data-categoria="aulas">
-                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Aula de Jiu-Jitsu">
-                </div>
-                <div class="galeria-item" data-categoria="estrutura">
-                    <img src="https://images.unsplash.com/photo-1599058917765-a780eda07a3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Academia CT Império">
-                </div>
-                <div class="galeria-item" data-categoria="equipes">
-                    <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Equipe CT Império">
-                </div>
-                <div class="galeria-item" data-categoria="eventos">
-                    <img src="https://images.unsplash.com/photo-1626248801379-51a0748a5f96?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Cerimônia de Graduação">
-                </div>
-                <div class="galeria-item" data-categoria="aulas">
-                    <img src="https://images.unsplash.com/photo-1594736797933-d0f289d3ee0a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Aula de Muay Thai">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- LIGHTBOX GALERIA -->
-    <div class="lightbox" id="lightbox">
-        <button class="lightbox-fechar" id="lightbox-fechar">×</button>
-        <img class="lightbox-img" id="lightbox-img" src="" alt="">
+      </div>
     </div>
 
-    <!-- VÍDEOS SECTION -->
-    <section class="videos" id="videos">
-        <div class="container">
-            <h2 class="section-title">Vídeos Instrucionais</h2>
-            <div class="videos-filtros">
-                <button class="filtro-btn ativo" data-filtro-video="todos">Todos</button>
-                <button class="filtro-btn" data-filtro-video="faixa-branca">Faixa Branca</button>
-                <button class="filtro-btn" data-filtro-video="faixa-azul">Faixa Azul</button>
-                <button class="filtro-btn" data-filtro-video="faixa-roxa">Faixa Roxa</button>
-                <button class="filtro-btn" data-filtro-video="finalizacoes">Finalizações</button>
-            </div>
-            <div class="videos-grid">
-                <div class="video-card" data-categoria="faixa-branca">
-                    <div class="video-thumb" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
-                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" alt="Posições Básicas do Jiu-Jitsu">
-                        <div class="play-icon">▶</div>
-                    </div>
-                    <div class="video-info">
-                        <h3>Posições Básicas do Jiu-Jitsu</h3>
-                        <p>Aprenda as posições fundamentais para iniciantes no Jiu-Jitsu.</p>
-                        <span class="video-categoria">Faixa Branca</span>
-                    </div>
-                </div>
-                <div class="video-card" data-categoria="faixa-azul">
-                    <div class="video-thumb" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
-                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" alt="Guarda Fechada - Fundamentos">
-                        <div class="play-icon">▶</div>
-                    </div>
-                    <div class="video-info">
-                        <h3>Guarda Fechada - Fundamentos</h3>
-                        <p>Domine os conceitos básicos da guarda fechada no Jiu-Jitsu.</p>
-                        <span class="video-categoria">Faixa Azul</span>
-                    </div>
-                </div>
-                <div class="video-card" data-categoria="finalizacoes">
-                    <div class="video-thumb" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
-                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" alt="Triângulo da Guarda">
-                        <div class="play-icon">▶</div>
-                    </div>
-                    <div class="video-info">
-                        <h3>Triângulo da Guarda</h3>
-                        <p>Aprenda a aplicar o triângulo a partir da guarda aberta.</p>
-                        <span class="video-categoria">Finalizações</span>
-                    </div>
-                </div>
-                <div class="video-card" data-categoria="faixa-roxa">
-                    <div class="video-thumb" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
-                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" alt="Berimbolo - Técnica Avançada">
-                        <div class="play-icon">▶</div>
-                    </div>
-                    <div class="video-info">
-                        <h3>Berimbolo - Técnica Avançada</h3>
-                        <p>Domine uma das técnicas mais eficazes do Jiu-Jitsu moderno.</p>
-                        <span class="video-categoria">Faixa Roxa</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  </div>
 
-    <!-- VIDEO PLAYER -->
-    <div class="video-player" id="video-player">
-        <div class="video-container">
-            <button class="video-fechar" id="video-fechar">×</button>
-            <iframe id="video-iframe" src="" frameborder="0" allowfullscreen></iframe>
+  <div class="hero-right" aria-hidden="false">
+    <div class="cover" role="img" aria-label="Academia CT Império"></div>
+    <div class="hero-overlay container">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-weight:900">Estrutura de alto nível</div>
+          <div style="font-size:.9rem;color:#ddd">Tatames, ringue, área de condicionamento e sala técnica</div>
         </div>
+        <div style="text-align:right">
+          <div style="color:var(--gold);font-weight:900">Matricule-se hoje</div>
+          <div style="font-size:.85rem;color:#ddd">Planos a partir de R$99/mês</div>
+        </div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <!-- FAQ SECTION -->
-    <section class="faq" id="faq">
-        <div class="container">
-            <h2 class="section-title">Perguntas Frequentes</h2>
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-pergunta">
-                        <h3>Como faço minha matrícula?</h3>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-resposta">
-                        <p>Para se matricular, você pode vir até o CT Império para uma aula experimental gratuita. Após a aula, nosso atendimento fará sua matrícula e explicará todos os planos disponíveis. É necessário apresentar documento de identidade e preencher a ficha de inscrição.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-pergunta">
-                        <h3>Quais equipamentos são necessários para começar?</h3>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-resposta">
-                        <p>Para as primeiras aulas, recomendamos roupas confortáveis (bermuda e camiseta). Após decidir pela modalidade, você precisará dos equipamentos específicos:</p>
-                        <ul>
-                            <li><strong>Jiu-Jitsu:</strong> Kimono e faixa</li>
-                            <li><strong>Muay Thai:</strong> Short, luvas e caneleiras</li>
-                            <li><strong>Boxe:</strong> Luvas e bandagem</li>
-                        </ul>
-                        <p>Temos equipamentos disponíveis para empréstimo nas primeiras aulas.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-pergunta">
-                        <h3>Há restrição de idade para praticar?</h3>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-resposta">
-                        <p>Oferecemos turmas para todas as idades:</p>
-                        <ul>
-                            <li><strong>Kids (4-7 anos):</strong> Aulas lúdicas com foco em coordenação motora e disciplina</li>
-                            <li><strong>Infantil (8-12 anos):</strong> Introdução às técnicas básicas das artes marciais</li>
-                            <li><strong>Juvenil (13-17 anos):</strong> Treinos mais técnicos e preparação para competições</li>
-                            <li><strong>Adultos (a partir de 18 anos):</strong> Todas as modalidades em diversos níveis</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-pergunta">
-                        <h3>Qual a diferença entre os planos?</h3>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-resposta">
-                        <p>Temos três tipos de planos disponíveis:</p>
-                        <ul>
-                            <li><strong>Plano Básico:</strong> Acesso a uma modalidade específica, 2x por semana</li>
-                            <li><strong>Plano Intermediário:</strong> Acesso a uma modalidade, 3x por semana</li>
-                            <li><strong>Plano Completo:</strong> Acesso a todas as modalidades, frequência ilimitada</li>
-                        </ul>
-                        <p>Também oferecemos descontos para famílias e planos corporativos.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-pergunta">
-                        <h3>Preciso ter condicionamento físico para começar?</h3>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-resposta">
-                        <p>Não é necessário ter condicionamento físico prévio. Nossas aulas são adaptadas para todos os níveis, desde iniciantes até atletas avançados. Os instrutores acompanham o desenvolvimento de cada aluno, ajustando a intensidade conforme a evolução individual. O condicionamento será desenvolvido naturalmente com a prática regular.</p>
-                    </div>
-                </div>
-            </div>
+<!-- BIOGRAFIA / VALORES -->
+<section id="sobre">
+  <div class="section-title"><h2>História e Filosofia</h2></div>
+  <div style="display:grid;grid-template-columns:1fr 360px;gap:1rem;align-items:start">
+    <div style="background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:1rem;border-radius:12px">
+      <p style="color:#ddd">Fundado em 2010, o CT Império nasceu com o objetivo de transformar vidas através das artes marciais. Acreditamos na disciplina, no respeito e na superação pessoal. Nosso método une técnica, condicionamento físico e acompanhamento individualizado.</p>
+      <ul style="color:#ccc">
+        <li>Treinamento técnico progressivo</li>
+        <li>Turmas para todas as idades e níveis</li>
+        <li>Ambiente seguro e profissional</li>
+      </ul>
+    </div>
+    <aside style="background:var(--muted);padding:1rem;border-radius:12px">
+      <div style="font-weight:800;color:var(--gold)">Valores</div>
+      <ol style="color:#ddd">
+        <li>Disciplina</li>
+        <li>Respeito</li>
+        <li>Superação</li>
+        <li>Honra</li>
+      </ol>
+    </aside>
+  </div>
+</section>
+
+<!-- MODALIDADES -->
+<section id="modalidades">
+  <div class="section-title"><h2>Modalidades</h2></div>
+  <div class="modes">
+    <div class="mode">
+      <div class="icon">JJ</div>
+      <h3>Jiu-Jitsu</h3>
+      <p style="color:#ccc">Foco em técnica de chão, controle e finalizações. Aulas estruturadas por faixa e nível de experiência.</p>
+    </div>
+    <div class="mode">
+      <div class="icon">MT</div>
+      <h3>Muay Thai</h3>
+      <p style="color:#ccc">Striking completo: socos, chutes, joelhadas e cotoveladas. Condicionamento e sparring supervisionado.</p>
+    </div>
+    <div class="mode">
+      <div class="icon">BX</div>
+      <h3>Boxe</h3>
+      <p style="color:#ccc">Trabalho de pés, técnica de socos e defesa. Treinos voltados para resistência e reflexos.</p>
+    </div>
+  </div>
+
+  <div style="margin-top:1rem" class="timetable">
+    <h4 style="margin-top:0">Grade de horários</h4>
+    <table aria-label="Grade de horários">
+      <thead>
+        <tr><th>Dia</th><th>Horário</th><th>Modalidade</th></tr>
+      </thead>
+      <tbody id="timetable-body">
+        <!-- preenchido por JS -->
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- LOJA -->
+<section id="loja">
+  <div class="section-title"><h2>Loja Oficial</h2></div>
+  <div class="shop-grid" id="products">
+    <!-- Produtos injetados por JS -->
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section id="galeria">
+  <div class="section-title"><h2>Galeria</h2></div>
+  <div class="filters">
+    <button class="btn" data-filter="all" onclick="filterGallery('all')">Todas</button>
+    <button class="btn" data-filter="eventos" onclick="filterGallery('eventos')">Eventos</button>
+    <button class="btn" data-filter="equipes" onclick="filterGallery('equipes')">Equipes</button>
+    <button class="btn" data-filter="aulas" onclick="filterGallery('aulas')">Aulas</button>
+    <button class="btn" data-filter="estrutura" onclick="filterGallery('estrutura')">Estrutura</button>
+  </div>
+  <div class="gallery-grid" id="gallery">
+    <!-- items injetados por JS -->
+  </div>
+</section>
+
+<!-- VÍDEOS -->
+<section id="videos">
+  <div class="section-title"><h2>Vídeos Instrucionais</h2></div>
+  <div style="display:flex;gap:1rem;align-items:center;margin-bottom:1rem">
+    <input id="video-search" placeholder="Buscar por técnica, faixa ou palavra-chave" style="flex:1;padding:.6rem;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text)" />
+    <button class="btn" onclick="renderVideos()">Buscar</button>
+  </div>
+  <div class="videos-grid" id="videos-list">
+    <!-- vídeos injetados por JS -->
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faq">
+  <div class="section-title"><h2>Perguntas Frequentes</h2></div>
+  <div>
+    <details class="item"><summary>Matrículas e planos</summary><div style="margin-top:.6rem;color:#ddd">Matricule-se presencialmente ou online. Aceitamos planos mensais, trimestrais e anuais. Consulta de valores no balcão ou via formulário.</div></details>
+    <details class="item"><summary>Horários e modalidades</summary><div style="margin-top:.6rem;color:#ddd">Consulte a grade de horários. Existem turmas para iniciantes, intermediários e avançados.</div></details>
+    <details class="item"><summary>Equipamentos necessários</summary><div style="margin-top:.6rem;color:#ddd">Leve kimono para Jiu-Jitsu (ou compre na nossa loja), protetor bucal para sparring, luvas e bandagens para Boxe/Muay Thai.</div></details>
+    <details class="item"><summary>Regras e conduta</summary><div style="margin-top:.6rem;color:#ddd">Respeito aos colegas e professores; higiene pessoal; uso de equipamento adequado; cumprir horários e avisar ausências.</div></details>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="section-title"><h2>Contato</h2></div>
+  <div class="contact-grid">
+    <div>
+      <div class="contact-card contact">
+        <p style="font-weight:900">Fale com a gente</p>
+        <p>Telefone: <a href="tel:+551199999999">(11) 99999-9999</a></p>
+        <p>Email: <a href="mailto:contato@ctimperio.com">contato@ctimperio.com</a></p>
+        <div class="socials" style="margin-top:.6rem">
+          <a href="#">Instagram</a>
+          <a href="#">Facebook</a>
+          <a href="#">YouTube</a>
         </div>
-    </section>
 
-    <!-- CONTATO SECTION -->
-    <section class="contato" id="contato">
-        <div class="container">
-            <h2 class="section-title">Contato</h2>
-            <div class="contato-container">
-                <div class="contato-info">
-                    <h3>Entre em Contato</h3>
-                    <div class="contato-item">
-                        <div class="contato-icon">📞</div>
-                        <div>
-                            <p><strong>Telefone:</strong> <a href="tel:+5511999999999">(11) 99999-9999</a></p>
-                        </div>
-                    </div>
-                    <div class="contato-item">
-                        <div class="contato-icon">📧</div>
-                        <div>
-                            <p><strong>E-mail:</strong> <a href="mailto:contato@ctimperio.com.br">contato@ctimperio.com.br</a></p>
-                        </div>
-                    </div>
-                    <div class="contato-item">
-                        <div class="contato-icon">📍</div>
-                        <div>
-                            <p><strong>Endereço:</strong> Rua das Artes Marciais, 123 - Centro, São Paulo - SP</p>
-                        </div>
-                    </div>
-                    <div class="contato-item">
-                        <div class="contato-icon">🕒</div>
-                        <div>
-                            <p><strong>Horário de Funcionamento:</strong></p>
-                            <p>Segunda a Sexta: 7h às 22h</p>
-                            <p>Sábado: 8h às 12h</p>
-                            <p>Domingo: Fechado</p>
-                        </div>
-                    </div>
-                    <div class="redes-sociais">
-                        <a href="#" class="rede-social">📘</a>
-                        <a href="#" class="rede-social">📷</a>
-                        <a href="#" class="rede-social">📺</a>
-                    </div>
-                </div>
-                <div class="contato-form">
-                    <form id="form-contato">
-                        <input type="text" placeholder="Seu Nome" required>
-                        <input type="email" placeholder="Seu E-mail" required>
-                        <input type="tel" placeholder="Seu Telefone">
-                        <select required>
-                            <option value="" disabled selected>Selecione o Assunto</option>
-                            <option value="aula-experimental">Aula Experimental</option>
-                            <option value="matricula">Matrícula</option>
-                            <option value="duvidas">Dúvidas</option>
-                            <option value="outros">Outros</option>
-                        </select>
-                        <textarea placeholder="Sua Mensagem" required></textarea>
-                        <button type="submit" class="btn">Enviar Mensagem</button>
-                    </form>
-                </div>
-            </div>
-            <div class="mapa">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.075426745292!2d-46.65342658440629!3d-23.565734367638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da0aa315%3A0xd59f9431f2c9776a!2sAv.%20Paulista%2C%20S%C3%A3o%20Paulo%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1622748289957!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy"></iframe>
-            </div>
+        <form id="contact-form" style="margin-top:1rem;display:grid;gap:.6rem">
+          <input name="nome" placeholder="Seu nome" required style="padding:.6rem;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text)" />
+          <input name="email" type="email" placeholder="Seu email" required style="padding:.6rem;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text)" />
+          <textarea name="mensagem" placeholder="Mensagem" rows="4" style="padding:.6rem;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text)"></textarea>
+          <div style="display:flex;gap:.6rem">
+            <button class="btn primary" type="submit">Enviar</button>
+            <button class="btn" type="reset">Limpar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div>
+      <div class="contact-card" style="height:100%">
+        <p style="font-weight:900">Onde nos encontrar</p>
+        <!-- Placeholder para mapa - substituir pelo iframe do Google Maps em produção -->
+        <div style="margin-top:.6rem;border-radius:8px;overflow:hidden;">
+          <iframe title="Mapa CT Império" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.0!2d-46.0!3d-23.0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzLCsDAwJzAwLjAiUyA0NsKwMDAnMDAuMCJX!5e0!3m2!1spt-BR!2sbr!4v1600000000000" width="100%" height="260" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
-    </section>
+        <p style="margin-top:.6rem;color:#ccc">Horário de funcionamento: Seg - Sex 6:00 - 22:00 | Sáb 8:00 - 13:00</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-col">
-                    <h3>CT Império</h3>
-                    <p>Centro de Treinamento de Lutas com mais de 15 anos de experiência formando campeões dentro e fora do tatame.</p>
-                </div>
-                <div class="footer-col">
-                    <h3>Links Rápidos</h3>
-                    <ul class="footer-links">
-                        <li><a href="#inicio">Início</a></li>
-                        <li><a href="#sobre">Sobre</a></li>
-                        <li><a href="#modalidades">Modalidades</a></li>
-                        <li><a href="#loja">Loja</a></li>
-                        <li><a href="#contato">Contato</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>Modalidades</h3>
-                    <ul class="footer-links">
-                        <li><a href="#modalidades">Jiu-Jitsu</a></li>
-                        <li><a href="#modalidades">Muay Thai</a></li>
-                        <li><a href="#modalidades">Boxe</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>Contato</h3>
-                    <ul class="footer-links">
-                        <li>Rua das Artes Marciais, 123</li>
-                        <li>Centro, São Paulo - SP</li>
-                        <li>(11) 99999-9999</li>
-                        <li>contato@ctimperio.com.br</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2023 CT Império - Centro de Treinamento de Lutas. Todos os direitos reservados.</p>
-            </div>
+  </main>  <div class="lightbox" id="lightbox" role="dialog" aria-hidden="true" onclick="closeLightbox()"><img id="lightbox-img" alt="Visualização" /></div><button id="cart-btn" class="cart" aria-label="Carrinho">🛒 <span id="cart-count">0</span></button>
+
+  <footer>
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap">
+        <div>© <strong>CT Império</strong> — Todos os direitos reservados</div>
+        <div style="color:#aaa">Feito com disciplina e suor</div>
+      </div>
+    </div>
+  </footer>  <script>
+    /* ==========================
+       DADOS INICIAIS (PRODUTOS, HORÁRIOS, GALERIA, VÍDEOS)
+       ========================== */
+    const timetable = [
+      {day:'Segunda', time:'06:00', duration:60, class:'Jiu-Jitsu Iniciante'},
+      {day:'Segunda', time:'19:00', duration:90, class:'Muay Thai Avançado'},
+      {day:'Terça', time:'19:00', duration:60, class:'Boxe Intermediário'},
+      {day:'Quarta', time:'06:00', duration:60, class:'Jiu-Jitsu Faixas'} ,
+      {day:'Quarta', time:'20:00', duration:90, class:'Sparring Muay Thai'},
+      {day:'Quinta', time:'19:00', duration:60, class:'Boxe Técnicas'},
+      {day:'Sexta', time:'19:00', duration:60, class:'Jiu-Jitsu Competição'},
+      {day:'Sabado', time:'09:00', duration:120, class:'Treino Aberto'},
+    ];
+
+    const products = [
+      {id:1,title:'Kimono Oficial - CT Império',price:249.90,img:'https://images.unsplash.com/photo-1549144511-f099e773c147?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=7a0e1b1'},
+      {id:2,title:'Luvas de Muay Thai',price:159.90,img:'https://images.unsplash.com/photo-1526403224740-3fef6a8f4b5c?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=abc'},
+      {id:3,title:'Camiseta Treino',price:59.90,img:'https://images.unsplash.com/photo-1520975914496-4b20d0b3e3a6?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=def'},
+      {id:4,title:'Bandagem Elástica',price:29.90,img:'https://images.unsplash.com/photo-1507029351207-3b9b2d4d5c92?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=ghi'},
+    ];
+
+    const galleryItems = [
+      {id:1,cat:'eventos',img:'https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=a1'},
+      {id:2,cat:'equipes',img:'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=b2'},
+      {id:3,cat:'aulas',img:'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=c3'},
+      {id:4,cat:'estrutura',img:'https://images.unsplash.com/photo-1526403224696-0c0d0b4c3e6f?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=d4'},
+      {id:5,cat:'eventos',img:'https://images.unsplash.com/photo-1534258047273-10f6a3b0a3b0?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=e5'},
+    ];
+
+    const videos = [
+      {id:1,title:'Passagem de guarda básica',category:'Jiu-Jitsu - Branca',src:'https://www.w3schools.com/html/mov_bbb.mp4'},
+      {id:2,title:'Sequência de socos básicos',category:'Boxe - Iniciante',src:'https://www.w3schools.com/html/mov_bbb.mp4'},
+      {id:3,title:'Clinche e joelhadas',category:'Muay Thai - Intermediário',src:'https://www.w3schools.com/html/mov_bbb.mp4'},
+    ];
+
+    /* ==========================
+       RENDERIZAÇÃO INICIAL
+       ========================== */
+    function renderTimetable(){
+      const tbody = document.getElementById('timetable-body');
+      tbody.innerHTML = timetable.map(t=>`<tr><td>${t.day}</td><td>${t.time}</td><td>${t.class}</td></tr>`).join('');
+    }
+
+    function renderProducts(){
+      const el = document.getElementById('products');
+      el.innerHTML = products.map(p=>`
+        <div class="product" data-id="${p.id}">
+          <div class="thumb"><img src="${p.img}" alt="${p.title}" /></div>
+          <h4>${p.title}</h4>
+          <div class="price">R$ ${p.price.toFixed(2)}</div>
+          <div style="margin-top:.6rem;display:flex;gap:.6rem">
+            <button class="btn" onclick="addToCart(${p.id})">Adicionar</button>
+            <button class="btn" onclick="openQuick(${p.id})">Ver</button>
+          </div>
         </div>
-    </footer>
+      `).join('');
+    }
 
-    <script>
-        // NAVEGAÇÃO RESPONSIVA
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
+    function renderGallery(filter='all'){
+      const g = document.getElementById('gallery');
+      const items = galleryItems.filter(i=>filter==='all' ? true : i.cat===filter);
+      g.innerHTML = items.map(it=>`<div class="gallery-item" onclick="openLightbox('${it.img}')"><img src="${it.img}" alt="Galeria ${it.id}" /></div>`).join('');
+    }
 
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('ativo');
-        });
+    function renderVideos(q=''){
+      const list = document.getElementById('videos-list');
+      const term = (document.getElementById('video-search')?.value || q).toLowerCase();
+      const items = videos.filter(v=> v.title.toLowerCase().includes(term) || v.category.toLowerCase().includes(term));
+      list.innerHTML = items.map(v=>`
+        <div class="video-card">
+          <h4 style="margin:0 0 .6rem 0">${v.title}</h4>
+          <div style="font-size:.85rem;color:#ccc;margin-bottom:.6rem">${v.category}</div>
+          <video controls width="100%" src="${v.src}" preload="metadata"></video>
+        </div>
+      `).join('');
+    }
 
-        // Fechar menu ao clicar em um link (mobile)
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('ativo');
-            });
-        });
+    /* ==========================
+       GALERIA & LIGHTBOX
+       ========================== */
+    function openLightbox(src){
+      document.getElementById('lightbox-img').src = src;
+      const lb = document.getElementById('lightbox');
+      lb.style.display = 'flex';
+      lb.setAttribute('aria-hidden','false');
+    }
+    function closeLightbox(){
+      const lb = document.getElementById('lightbox');
+      lb.style.display = 'none';
+      lb.setAttribute('aria-hidden','true');
+    }
 
-        // AULA EM ANDAMENTO - SISTEMA DINÂMICO
-        function atualizarAulaAtual() {
-            const agora = new Date();
-            const diaSemana = agora.getDay(); // 0 = Domingo, 1 = Segunda, etc.
-            const horaAtual = agora.getHours() + agora.getMinutes() / 60;
-            
-            // Horários das aulas (exemplo)
-            const horarios = [
-                { dia: 1, inicio: 18, fim: 19, modalidade: "Jiu-Jitsu - Adultos", professor: "Mestre Silva" },
-                { dia: 1, inicio: 19, fim: 20, modalidade: "Muay Thai - Intermediário", professor: "Professor João" },
-                { dia: 2, inicio: 18, fim: 19, modalidade: "Muay Thai - Iniciantes", professor: "Professor Carlos" },
-                { dia: 2, inicio: 19, fim: 20, modalidade: "Boxe - Avançado", professor: "Professor Pedro" },
-                // Adicione mais horários conforme necessário
-            ];
-            
-            // Encontrar aula atual
-            let aulaAtual = null;
-            let proximaAula = null;
-            
-            for (let horario of horarios) {
-                if (horario.dia === diaSemana && horaAtual >= horario.inicio && horaAtual < horario.fim) {
-                    aulaAtual = horario;
-                    break;
-                }
-            }
-            
-            // Encontrar próxima aula
-            for (let horario of horarios) {
-                if (horario.dia === diaSemana && horaAtual < horario.inicio) {
-                    proximaAula = horario;
-                    break;
-                }
-            }
-            
-            // Atualizar interface
-            const aulaTitulo = document.getElementById('aula-titulo');
-            const aulaHorario = document.getElementById('aula-horario');
-            const aulaProfessor = document.getElementById('aula-professor');
-            const progressoAula = document.getElementById('progresso-aula');
-            const horarioInicio = document.getElementById('horario-inicio');
-            const horarioFim = document.getElementById('horario-fim');
-            const proximaAulaTitulo = document.getElementById('proxima-aula-titulo');
-            const proximaAulaHorario = document.getElementById('proxima-aula-horario');
-            
-            if (aulaAtual) {
-                aulaTitulo.textContent = aulaAtual.modalidade;
-                aulaHorario.textContent = `${aulaAtual.inicio}:00 - ${aulaAtual.fim}:00`;
-                aulaProfessor.textContent = `Professor: ${aulaAtual.professor}`;
-                horarioInicio.textContent = `${aulaAtual.inicio}:00`;
-                horarioFim.textContent = `${aulaAtual.fim}:00`;
-                
-                // Calcular progresso
-                const duracaoTotal = aulaAtual.fim - aulaAtual.inicio;
-                const tempoDecorrido = horaAtual - aulaAtual.inicio;
-                const percentual = (tempoDecorrido / duracaoTotal) * 100;
-                progressoAula.style.width = `${Math.min(100, Math.max(0, percentual))}%`;
-            } else {
-                aulaTitulo.textContent = "Nenhuma aula no momento";
-                aulaHorario.textContent = "";
-                aulaProfessor.textContent = "";
-                horarioInicio.textContent = "";
-                horarioFim.textContent = "";
-                progressoAula.style.width = "0%";
-            }
-            
-            if (proximaAula) {
-                proximaAulaTitulo.textContent = proximaAula.modalidade;
-                proximaAulaHorario.textContent = `${proximaAula.inicio}:00 - ${proximaAula.fim}:00`;
-            } else {
-                proximaAulaTitulo.textContent = "Nenhuma aula programada";
-                proximaAulaHorario.textContent = "";
-            }
+    function filterGallery(cat){ renderGallery(cat); }
+
+    /* ==========================
+       SISTEMA DE HORÁRIOS DINÂMICO (AULA EM ANDAMENTO)
+       ========================== */
+    function timeToMinutes(t){ const [h,m]=t.split(':').map(Number); return h*60+m; }
+    function pad(n){return n.toString().padStart(2,'0')}
+
+    function updateLive(){
+      // obtém horário local do navegador
+      const now = new Date();
+      const dayNames = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sabado'];
+      const today = dayNames[now.getDay()];
+      const minutesNow = now.getHours()*60 + now.getMinutes();
+
+      // procura primeiras aulas do dia para simplicidade - match dia string
+      const todays = timetable.filter(t=> t.day === today);
+
+      // tenta encontrar aula em andamento
+      let current = null;
+      for(const t of todays){
+        const start = timeToMinutes(t.time);
+        const end = start + t.duration;
+        if(minutesNow >= start && minutesNow < end){ current = {...t, start, end}; break; }
+      }
+
+      const titleEl = document.getElementById('live-title');
+      const timeEl = document.getElementById('live-time');
+      const startEl = document.getElementById('live-start');
+      const endEl = document.getElementById('live-end');
+      const prog = document.getElementById('live-progress');
+
+      if(current){
+        titleEl.textContent = current.class;
+        const nowStr = pad(now.getHours())+':'+pad(now.getMinutes());
+        timeEl.textContent = nowStr;
+        startEl.textContent = 'Início: '+ (Math.floor(current.start/60).toString().padStart(2,'0'))+':'+pad(current.start%60);
+        endEl.textContent = 'Término: '+ (Math.floor(current.end/60).toString().padStart(2,'0'))+':'+pad(current.end%60);
+
+        const total = current.end - current.start;
+        const passed = minutesNow - current.start;
+        const pct = Math.max(0, Math.min(100, (passed/total)*100));
+        prog.style.width = pct+'%';
+      } else {
+        titleEl.textContent = 'Nenhuma aula em andamento';
+        timeEl.textContent = pad(now.getHours())+':'+pad(now.getMinutes());
+        startEl.textContent = 'Próxima: —';
+        endEl.textContent = '—';
+        prog.style.width = '0%';
+
+        // opcional: encontrar próxima aula do dia
+        if(todays.length){
+          const upcoming = todays.find(t=> timeToMinutes(t.time) > minutesNow);
+          if(upcoming){
+            startEl.textContent = 'Próxima: '+upcoming.class+' às '+upcoming.time;
+          }
         }
+      }
+    }
 
-        // Atualizar a cada minuto
-        setInterval(atualizarAulaAtual, 60000);
-        atualizarAulaAtual(); // Executar imediatamente
+    /* ==========================
+       CARRINHO (LOCALSTORAGE) - básico
+       ========================== */
+    const CART_KEY = 'ctimperio_cart_v1';
+    function loadCart(){
+      try{ return JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch(e){ return []; }
+    }
+    function saveCart(c){ localStorage.setItem(CART_KEY, JSON.stringify(c)); updateCartCount(); }
+    function updateCartCount(){ const c = loadCart(); document.getElementById('cart-count').textContent = c.reduce((s,i)=>s+i.qty,0); }
 
-        // SISTEMA DE CARRINHO
-        let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-        const carrinhoToggle = document.getElementById('carrinho-toggle');
-        const carrinhoElement = document.getElementById('carrinho');
-        const carrinhoItens = document.getElementById('carrinho-itens');
-        const carrinhoCount = document.getElementById('carrinho-count');
-        const carrinhoTotal = document.getElementById('carrinho-total');
-        const finalizarCompra = document.getElementById('finalizar-compra');
+    function addToCart(id, qty=1){
+      const prod = products.find(p=>p.id===id);
+      if(!prod) return alert('Produto não encontrado');
+      const cart = loadCart();
+      const found = cart.find(i=>i.id===id);
+      if(found) found.qty += qty; else cart.push({id:prod.id,title:prod.title,price:prod.price,qty});
+      saveCart(cart);
+      alert(prod.title + ' adicionado ao carrinho');
+    }
 
-        function atualizarCarrinho() {
-            // Limpar carrinho
-            carrinhoItens.innerHTML = '';
-            
-            // Atualizar contador
-            carrinhoCount.textContent = carrinho.length;
-            
-            // Calcular total
-            let total = 0;
-            
-            // Adicionar itens
-            carrinho.forEach((item, index) => {
-                total += item.preco;
-                
-                const itemElement = document.createElement('div');
-                itemElement.className = 'carrinho-item';
-                itemElement.innerHTML = `
-                    <div>
-                        <strong>${item.nome}</strong>
-                        <p>R$ ${item.preco.toFixed(2)}</p>
-                    </div>
-                    <button class="remover-item" data-index="${index}">×</button>
-                `;
-                carrinhoItens.appendChild(itemElement);
-            });
-            
-            // Atualizar total
-            carrinhoTotal.textContent = `Total: R$ ${total.toFixed(2)}`;
-            
-            // Salvar no localStorage
-            localStorage.setItem('carrinho', JSON.stringify(carrinho));
-        }
+    document.getElementById('cart-btn').addEventListener('click', ()=>{
+      const cart = loadCart();
+      if(!cart.length) return alert('Carrinho vazio');
+      const summary = cart.map(i=>`${i.qty}x ${i.title} — R$ ${(i.price*i.qty).toFixed(2)}`).join('\n');
+      const total = cart.reduce((s,i)=> s + i.price * i.qty, 0).toFixed(2);
+      if(confirm(`Itens no carrinho:\n\n${summary}\n\nTotal: R$ ${total}\n\nDeseja simular pagamento?`)){
+        // Simulação de pagamento - em produção integrar gateway
+        localStorage.removeItem(CART_KEY);
+        updateCartCount();
+        alert('Pagamento simulado com sucesso — obrigado!');
+      }
+    });
 
-        // Adicionar produto ao carrinho
-        document.querySelectorAll('.adicionar-carrinho').forEach(button => {
-            button.addEventListener('click', () => {
-                const id = button.getAttribute('data-id');
-                const nome = button.getAttribute('data-nome');
-                const preco = parseFloat(button.getAttribute('data-preco'));
-                
-                carrinho.push({ id, nome, preco });
-                atualizarCarrinho();
-                
-                // Feedback visual
-                button.textContent = 'Adicionado!';
-                setTimeout(() => {
-                    button.textContent = 'Adicionar ao Carrinho';
-                }, 1500);
-            });
-        });
+    /* ==========================
+       CONTATO (sem backend) - validação mínima
+       ========================== */
+    document.getElementById('contact-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const data = new FormData(this);
+      const nome = data.get('nome'), email = data.get('email'), mensagem = data.get('mensagem');
+      if(!nome || !email || !mensagem) return alert('Preencha todos os campos');
+      alert('Mensagem enviada (simulação). Em produção, isso seria encaminhado ao backend.');
+      this.reset();
+    });
 
-        // Remover item do carrinho
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('remover-item')) {
-                const index = parseInt(e.target.getAttribute('data-index'));
-                carrinho.splice(index, 1);
-                atualizarCarrinho();
-            }
-        });
+    /* ==========================
+       INICIALIZAÇÃO
+       ========================== */
+    renderTimetable();
+    renderProducts();
+    renderGallery();
+    renderVideos();
+    updateCartCount();
+    updateLive();
+    setInterval(updateLive, 30*1000); // atualiza a cada 30s
 
-        // Toggle carrinho
-        carrinhoToggle.addEventListener('click', (e) => {
-            e.preventDefault();
-            carrinhoElement.classList.toggle('ativo');
-        });
+    /* ==========================
+       MELHORIAS DE UX
+       ========================== */
+    // Smooth anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const href = a.getAttribute('href');
+        if(href === '#' || href === '') return;
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+      })
+    });
 
-        // Finalizar compra
-        finalizarCompra.addEventListener('click', () => {
-            if (carrinho.length === 0) {
-                alert('Seu carrinho está vazio!');
-                return;
-            }
-            
-            alert('Compra finalizada! Em breve entraremos em contato para confirmar o pedido.');
-            carrinho = [];
-            atualizarCarrinho();
-            carrinhoElement.classList.remove('ativo');
-        });
+    // mobile hamburger (simples)
+    document.querySelector('.hamburger').addEventListener('click', ()=>{
+      const nav = document.querySelector('nav ul');
+      if(nav.style.display === 'flex') nav.style.display = 'none'; else nav.style.display = 'flex';
+    });
 
-        // Inicializar carrinho
-        atualizarCarrinho();
+    // quick product view (exemplo)
+    function openQuick(id){
+      const p = products.find(x=>x.id===id);
+      if(!p) return;
+      alert(p.title + "\nR$ " + p.price.toFixed(2) + "\n(Adicionar ao carrinho para comprar)");
+    }
+    window.openQuick = openQuick; // expõe para onclick inline
 
-        // GALERIA COM FILTROS E LIGHTBOX
-        const filtroBtns = document.querySelectorAll('.filtro-btn');
-        const galeriaItems = document.querySelectorAll('.galeria-item');
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const lightboxFechar = document.getElementById('lightbox-fechar');
+    // expose some functions for buttons
+    window.addToCart = addToCart;
+    window.filterGallery = filterGallery;
+    window.openLightbox = openLightbox;
+    window.closeLightbox = closeLightbox;
+    window.renderVideos = renderVideos;
 
-        // Filtros da galeria
-        filtroBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remover classe ativo de todos os botões
-                filtroBtns.forEach(b => b.classList.remove('ativo'));
-                // Adicionar classe ativo ao botão clicado
-                btn.classList.add('ativo');
-                
-                const filtro = btn.getAttribute('data-filtro');
-                
-                galeriaItems.forEach(item => {
-                    if (filtro === 'todos' || item.getAttribute('data-categoria') === filtro) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            });
-        });
+    // keyboard support for lightbox
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape') closeLightbox();
+    });
 
-        // Lightbox
-        galeriaItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const imgSrc = item.querySelector('img').getAttribute('src');
-                lightboxImg.setAttribute('src', imgSrc);
-                lightbox.classList.add('ativo');
-            });
-        });
+    // accessibility: trap focus could be improved in production
 
-        lightboxFechar.addEventListener('click', () => {
-            lightbox.classList.remove('ativo');
-        });
-
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) {
-                lightbox.classList.remove('ativo');
-            }
-        });
-
-        // VÍDEOS COM FILTROS E PLAYER
-        const filtroVideoBtns = document.querySelectorAll('[data-filtro-video]');
-        const videoCards = document.querySelectorAll('.video-card');
-        const videoPlayer = document.getElementById('video-player');
-        const videoIframe = document.getElementById('video-iframe');
-        const videoFechar = document.getElementById('video-fechar');
-
-        // Filtros dos vídeos
-        filtroVideoBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remover classe ativo de todos os botões
-                filtroVideoBtns.forEach(b => b.classList.remove('ativo'));
-                // Adicionar classe ativo ao botão clicado
-                btn.classList.add('ativo');
-                
-                const filtro = btn.getAttribute('data-filtro-video');
-                
-                videoCards.forEach(card => {
-                    if (filtro === 'todos' || card.getAttribute('data-categoria') === filtro) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
-        });
-
-        // Player de vídeo
-        document.querySelectorAll('.video-thumb').forEach(thumb => {
-            thumb.addEventListener('click', () => {
-                const videoSrc = thumb.getAttribute('data-video');
-                videoIframe.setAttribute('src', videoSrc);
-                videoPlayer.classList.add('ativo');
-            });
-        });
-
-        videoFechar.addEventListener('click', () => {
-            videoPlayer.classList.remove('ativo');
-            videoIframe.setAttribute('src', ''); // Parar o vídeo
-        });
-
-        videoPlayer.addEventListener('click', (e) => {
-            if (e.target === videoPlayer) {
-                videoPlayer.classList.remove('ativo');
-                videoIframe.setAttribute('src', ''); // Parar o vídeo
-            }
-        });
-
-        // FAQ ACCORDION
-        const faqItems = document.querySelectorAll('.faq-item');
-
-        faqItems.forEach(item => {
-            const pergunta = item.querySelector('.faq-pergunta');
-            
-            pergunta.addEventListener('click', () => {
-                // Fechar outros itens abertos
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item && otherItem.classList.contains('ativo')) {
-                        otherItem.classList.remove('ativo');
-                    }
-                });
-                
-                // Alternar item atual
-                item.classList.toggle('ativo');
-            });
-        });
-
-        // FORMULÁRIO DE CONTATO
-        const formContato = document.getElementById('form-contato');
-
-        formContato.addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
-            formContato.reset();
-        });
-
-        // SCROLL SUAVE PARA ÂNCORAS
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // ANIMAÇÃO AO SCROLL
-        function animarAoScroll() {
-            const elementos = document.querySelectorAll('.modalidade-card, .produto-card, .video-card');
-            
-            elementos.forEach(elemento => {
-                const elementoTopo = elemento.getBoundingClientRect().top;
-                const janelaAltura = window.innerHeight;
-                
-                if (elementoTopo < janelaAltura - 100) {
-                    elemento.style.opacity = '1';
-                    elemento.style.transform = 'translateY(0)';
-                }
-            });
-        }
-
-        // Inicializar estilos para animação
-        document.querySelectorAll('.modalidade-card, .produto-card, .video-card').forEach(elemento => {
-            elemento.style.opacity = '0';
-            elemento.style.transform = 'translateY(20px)';
-            elemento.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        });
-
-        window.addEventListener('scroll', animarAoScroll);
-        animarAoScroll(); // Executar uma vez ao carregar a página
-    </script>
-</body>
-                      </html>
+    /* ==========================
+       Comentários:
+       - Este template foi construído usando apenas HTML5, CSS3 (Flex/Grid) e JS puro.
+       - Imagens e vídeos são placeholders. Substitua pelas mídias oficiais do CT.
+       - Para integração de pagamento, substitua a simulação por um gateway (ex: PagSeguro, Stripe, Mercado Pago) no endpoint de checkout.
+       - Em produção recomendo separar CSS e JS em arquivos, minificar e adicionar cache headers.
+       ========================== */
+  </script></body>
+</html>
