@@ -1,539 +1,1457 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>CT Império</title>
-  <!-- Fontes e ícones -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/yourfontawesomekit.js" crossorigin="anonymous"></script>  <!-- Meta tags para performance -->  <meta name="description" content="CT Império - Centro de Treinamento de Lutas | Jiu-Jitsu, Muay Thai e Boxe. Aulas, loja, galeria e contato.">  <style>
-    /* ------------------------------
-       Variáveis de tema (cores, tipografia)
-       Mobile-first: estilize para telas pequenas e expanda com media queries
-       ------------------------------ */
-    :root{
-      --bg:#000; /* preto */
-      --primary:#ffd400; /* amarelo CT */
-      --muted:#f5f5f5; /* branco sujo */
-      --accent:#ffffff;
-      --max-width:1100px;
-      --radius:12px;
-      --ff: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    }
-
-    /* Reset simples */
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:var(--ff);
-      background:var(--bg);
-      color:var(--muted);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.4;
-      -webkit-tap-highlight-color:transparent;
-    }
-
-    a{color:inherit;text-decoration:none}
-
-    /* Container central */
-    .container{max-width:var(--max-width);margin:0 auto;padding:1rem}
-
-    /* Header */
-    header{
-      display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0;
-    }
-    .logo{display:flex;align-items:center;gap:0.75rem}
-    .logo__mark{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--primary),#ffea70);display:flex;align-items:center;justify-content:center;color:#000;font-weight:800}
-    .logo__text{font-weight:800;font-size:1.1rem}
-
-    /* Hamburger */
-    .hamburger{background:transparent;border:0;color:var(--muted);font-size:1.6rem}
-    nav{display:none}
-    .nav-list{display:flex;flex-direction:column;gap:0.5rem;padding:1rem}
-    .nav-list a{padding:0.5rem;border-radius:8px}
-
-    /* Hero (imagem com overlay e CTA) */
-    .hero{
-      position:relative;border-radius:14px;overflow:hidden;margin:0.75rem 0;
-      min-height:260px;display:flex;align-items:flex-end
-    }
-    .hero img{width:100%;height:100%;object-fit:cover;display:block}
-    .hero__overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.65));display:flex;flex-direction:column;justify-content:flex-end;padding:1rem}
-    .hero__cta{display:flex;align-items:center;gap:0.75rem}
-    .btn{background:var(--primary);color:#000;padding:0.65rem 0.9rem;border-radius:10px;font-weight:700;border:0}
-
-    /* Seções */
-    section{margin:1rem 0;padding:0.5rem 0}
-    h2{margin:0 0 0.6rem 0;font-size:1.05rem}
-    p.lead{color:var(--muted);opacity:0.95}
-
-    /* Cards de professor e modalidades */
-    .grid{display:grid;gap:0.75rem}
-    .grid--2{grid-template-columns:1fr 1fr}
-    .card{background:rgba(255,255,255,0.04);padding:0.8rem;border-radius:12px}
-    .profile{display:flex;gap:0.75rem;align-items:center}
-    .avatar{width:64px;height:64px;border-radius:8px;overflow:hidden}
-    .avatar img{width:100%;height:100%;object-fit:cover}
-
-    /* Aula atual (widget) */
-    .class-widget{display:flex;flex-direction:column;gap:0.6rem}
-    .class-widget__top{display:flex;justify-content:space-between;align-items:center}
-    .progress{height:12px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden}
-    .progress__bar{height:100%;width:0%;background:linear-gradient(90deg,var(--primary),#fff2a8);transition:width 0.6s ease}
-    .time-small{font-size:0.85rem;opacity:0.9}
-
-    /* Modalidades (icons) */
-    .modes{display:flex;gap:0.5rem}
-    .mode{flex:1;text-align:center;padding:0.6rem;border-radius:10px}
-    .mode i{font-size:1.5rem;display:block;margin-bottom:0.4rem}
-
-    /* Loja (cards e filtros) */
-    .shop-controls{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.6rem}
-    .search-input{flex:1;padding:0.5rem;border-radius:10px;border:0;background:rgba(255,255,255,0.03);color:var(--muted)}
-    .product-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.6rem}
-    .product{background:rgba(255,255,255,0.02);padding:0.6rem;border-radius:10px}
-    .product img{width:100%;height:120px;object-fit:cover;border-radius:8px}
-
-    /* Galeria */
-    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:0.4rem}
-    .gallery img{width:100%;height:100px;object-fit:cover;border-radius:8px}
-
-    /* FAQ accordion */
-    .faq-item{background:rgba(255,255,255,0.02);border-radius:10px;padding:0.5rem}
-    .faq-question{display:flex;justify-content:space-between;align-items:center;cursor:pointer}
-    .faq-answer{max-height:0;overflow:hidden;transition:max-height 0.35s ease;padding-top:0}
-
-    /* Contato */
-    form{display:flex;flex-direction:column;gap:0.5rem}
-    input,textarea,select{padding:0.6rem;border-radius:8px;border:0;background:rgba(255,255,255,0.03);color:var(--muted)}
-
-    /* Lightbox modal (gallery) */
-    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.86);display:flex;align-items:center;justify-content:center;padding:1rem;z-index:1200}
-    .lightbox img{max-width:95%;max-height:85%;border-radius:10px}
-
-    /* Footer */
-    footer{padding:1rem 0;text-align:center;color:rgba(255,255,255,0.6);font-size:0.9rem}
-
-    /* Media queries: tablet/desktop */
-    @media(min-width:720px){
-      nav{display:block}
-      .nav-list{flex-direction:row;padding:0}
-      .hero{min-height:360px}
-      .grid--2{grid-template-columns:1fr 1fr}
-      .product-grid{grid-template-columns:repeat(3,1fr)}
-      .gallery{grid-template-columns:repeat(4,1fr)}
-    }
-
-    @media(min-width:980px){
-      .container{padding:2rem}
-      header{padding:1rem 0}
-    }
-  </style></head>
-<body>  <!-- Header: logo e menu hamburger para mobile -->  <div class="container">
-    <header>
-      <div class="logo" aria-label="CT Império">
-        <div class="logo__mark">CI</div>
-        <div class="logo__text">CT <strong>Império</strong></div>
-      </div><!-- Botão hamburger (aparece em mobile) -->
-  <button class="hamburger" id="btnHamb" aria-expanded="false" aria-controls="nav">
-    <i class="fas fa-bars" aria-hidden="true"></i>
-    <span class="sr-only">Abrir menu</span>
-  </button>
-
-  <!-- Navegação: em mobile usa display toggled, em desktop aparece sempre -->
-  <nav id="nav" aria-label="Navegação principal">
-    <div class="nav-list">
-      <a href="#inicio">Início</a>
-      <a href="#modalidades">Modalidades</a>
-      <a href="#loja">Loja</a>
-      <a href="#galeria">Galeria</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contato">Contato</a>
-    </div>
-  </nav>
-</header>
-
-  </div>  <!-- HERO: imagem com overlay e CTA -->  <main class="container" id="inicio">
-    <section class="hero" role="region" aria-label="Hero do CT Império">
-      <!-- imagem otimizada com picture (substitua srcs pelas suas imagens otimizadas) -->
-      <picture>
-        <source media="(min-width:720px)" srcset="/images/ct-hero-desktop.jpg">
-        <img src="/images/ct-hero-mobile.jpg" alt="Treinamento no CT Império">
-      </picture>
-      <div class="hero__overlay">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <div>
-            <h1 style="margin:0;color:var(--accent);font-size:1.2rem">CT <strong>Império</strong></h1>
-            <p class="lead">Jiu-Jitsu • Muay Thai • Boxe — Energia, técnica e comunidade.</p>
-          </div>
-          <div class="hero__cta">
-            <a href="#contato" class="btn">Agende sua aula</a>
-          </div>
-        </div>
-      </div>
-    </section><!-- BIOGRAFIA -->
-<section aria-labelledby="sobre">
-  <h2 id="sobre">Nossa História</h2>
-  <div class="card">
-    <p class="lead">Fundado com paixão pelas artes marciais, o CT Império combina disciplina e comunidade para formar atletas e cidadãos. Aqui o treino é para todos: iniciantes, competitivos e quem busca condicionamento físico.</p>
-  </div>
-</section>
-
-<!-- PROFESSOR/DONO -->
-<section aria-labelledby="professor">
-  <h2 id="professor">Professor / Fundador</h2>
-  <div class="grid grid--2">
-    <div class="card profile">
-      <div class="avatar" aria-hidden="true"><img src="/images/coach.jpg" alt="Foto do professor"></div>
-      <div>
-        <div style="font-weight:800">Professor João Silva</div>
-        <div style="font-size:0.95rem;color:rgba(255,255,255,0.85)">Faixa-preta 3º grau — 20 anos de experiência em Jiu-Jitsu e combate.</div>
-        <p style="margin-top:0.5rem">Formador de campeões e apaixonada por transmitir técnica com responsabilidade. Nossa filosofia é treinar com intensidade e respeito.</p>
-      </div>
-    </div>
-
-    <!-- Widget: Aula Atual -->
-    <div class="card class-widget" aria-live="polite" aria-atomic="true">
-      <div class="class-widget__top">
-        <div>
-          <div style="font-weight:800">Aula Atual</div>
-          <div class="time-small" id="className">Carregando...</div>
-        </div>
-        <div class="time-small" id="classTime">00:00 - 00:00</div>
-      </div>
-      <div class="progress" aria-hidden="true">
-        <div class="progress__bar" id="progressBar"></div>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.4rem">
-        <small class="time-small" id="timeLeft">—</small>
-        <button class="btn" id="joinBtn">Ver detalhes</button>
-      </div>
-      <small style="display:block;margin-top:0.5rem;opacity:0.85;font-size:0.85rem">Atualizado em tempo real no dispositivo.</small>
-    </div>
-  </div>
-</section>
-
-<!-- MODALIDADES -->
-<section aria-labelledby="modalidades">
-  <h2 id="modalidades">Modalidades</h2>
-  <div class="modes">
-    <div class="mode card" role="article" aria-label="Jiu-Jitsu">
-      <i class="fas fa-hand-rock"></i>
-      <div style="font-weight:700">Jiu-Jitsu</div>
-      <div style="font-size:0.9rem">Técnica, chão e controle — aulas para todos os níveis.</div>
-    </div>
-    <div class="mode card" role="article" aria-label="Muay Thai">
-      <i class="fas fa-fist-raised"></i>
-      <div style="font-weight:700">Muay Thai</div>
-      <div style="font-size:0.9rem">Condicionamento e striking — treinamentos intensos.</div>
-    </div>
-    <div class="mode card" role="article" aria-label="Boxe">
-      <i class="fas fa-bolt"></i>
-      <div style="font-weight:700">Boxe</div>
-      <div style="font-size:0.9rem">Velocidade e precisão — fundamentos e sparring controlado.</div>
-    </div>
-  </div>
-</section>
-
-<!-- LOJA (single page - produtos dummy e filtros JS) -->
-<section id="loja" aria-labelledby="lojaTitle">
-  <h2 id="lojaTitle">Loja</h2>
-  <div class="card">
-    <div class="shop-controls">
-      <input class="search-input" id="searchProduct" placeholder="Buscar produto...">
-      <select id="filterType" aria-label="Filtrar por tipo">
-        <option value="all">Todos</option>
-        <option value="kimono">Kimonos</option>
-        <option value="luva">Luvas</option>
-        <option value="acessorio">Acessórios</option>
-      </select>
-    </div>
-
-    <div class="product-grid" id="productGrid">
-      <!-- Produtos injetados por JS -->
-    </div>
-  </div>
-</section>
-
-<!-- GALERIA: fotos e vídeos (lightbox + player) -->
-<section id="galeria" aria-labelledby="galeriaTitle">
-  <h2 id="galeriaTitle">Galeria</h2>
-  <div class="card">
-    <div style="margin-bottom:0.6rem;font-weight:700">Eventos e Equipes</div>
-    <div class="gallery" id="photoGallery">
-      <!-- imagens de exemplo -->
-      <img src="/images/event1.jpg" alt="Evento 1" loading="lazy">
-      <img src="/images/event2.jpg" alt="Evento 2" loading="lazy">
-      <img src="/images/team1.jpg" alt="Equipe" loading="lazy">
-      <img src="/images/training1.jpg" alt="Treino" loading="lazy">
-      <img src="/images/event3.jpg" alt="Evento 3" loading="lazy">
-      <img src="/images/team2.jpg" alt="Equipe 2" loading="lazy">
-    </div>
-
-    <div style="margin-top:0.8rem">
-      <div style="font-weight:700;margin-bottom:0.4rem">Vídeos Educativos</div>
-      <!-- Player de vídeo integrado (embed YouTube ou <video>) -->
-      <div style="aspect-ratio:16/9;background:#111;border-radius:10px;overflow:hidden">
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Vídeo educativo de Jiu-Jitsu" frameborder="0" allowfullscreen></iframe>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ com accordion -->
-<section id="faq" aria-labelledby="faqTitle">
-  <h2 id="faqTitle">Perguntas Frequentes</h2>
-  <div class="card">
-    <div class="faq-item">
-      <div class="faq-question" data-open="false">
-        <div>Quais são os horários das aulas?</div>
-        <div><i class="fas fa-chevron-down"></i></div>
-      </div>
-      <div class="faq-answer">Temos turmas pela manhã, tarde e noite — consulte o horário atualizado no widget 'Aula Atual' ou entre em contato.</div>
-    </div>
-
-    <div class="faq-item" style="margin-top:0.5rem">
-      <div class="faq-question" data-open="false">
-        <div>Preciso ter experiência prévia?</div>
-        <div><i class="fas fa-chevron-down"></i></div>
-      </div>
-      <div class="faq-answer">Não — iniciação disponível para todas as modalidades, com turmas para iniciantes.</div>
-    </div>
-
-    <div class="faq-item" style="margin-top:0.5rem">
-      <div class="faq-question" data-open="false">
-        <div>Como faço para comprar na loja?</div>
-        <div><i class="fas fa-chevron-down"></i></div>
-      </div>
-      <div class="faq-answer">A compra pode ser feita presencialmente ou por contato direto; em breve teremos e‑commerce integrado.</div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTATO: telefones, endereço, formulário e mapa (iframe Google Maps) -->
-<section id="contato" aria-labelledby="contatoTitle">
-  <h2 id="contatoTitle">Contato</h2>
-  <div class="card">
-    <div style="display:flex;gap:0.6rem;flex-direction:column">
-      <div>📞 <strong>(11) 99999-9999</strong></div>
-      <div>📍 Rua Exemplo, 123 - Cidade</div>
-
-      <form id="contactForm" aria-label="Formulário de contato">
-        <input type="text" id="name" placeholder="Seu nome" required>
-        <input type="tel" id="phone" placeholder="Telefone">
-        <input type="email" id="email" placeholder="Email" required>
-        <textarea id="message" rows="4" placeholder="Mensagem"></textarea>
-        <button class="btn" type="submit">Enviar mensagem</button>
-      </form>
-
-      <div style="margin-top:0.6rem">
-        <!-- Mapa embed (substitua o src pelo seu link do Google Maps) -->
-        <div style="aspect-ratio:16/9;border-radius:8px;overflow:hidden;margin-top:0.5rem">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18" style="border:0;width:100%;height:100%" allowfullscreen="" loading="lazy"></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div>© <span id="year"></span> CT Império — Todos os direitos reservados</div>
-</footer>
-
-  </main>  <!-- Lightbox container (injetado pelo JS) -->  <div id="lightboxRoot" aria-hidden="true"></div>  <script>
-    /* ================================
-       JavaScript para interatividade
-       - Menu hamburger
-       - Aula atual (barra de progresso animada)
-       - Loja: busca e filtro
-       - Galeria: lightbox
-       - FAQ: accordion
-       - Formulário (não envia, apenas simula)
-       ================================ */
-
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Menu hamburger toggle (mobile)
-    const btnHamb = document.getElementById('btnHamb');
-    const nav = document.getElementById('nav');
-    btnHamb.addEventListener('click', () => {
-      const expanded = btnHamb.getAttribute('aria-expanded') === 'true';
-      btnHamb.setAttribute('aria-expanded', String(!expanded));
-      // toggling nav visibility for mobile (simple approach)
-      if(nav.style.display === 'block') nav.style.display = '';
-      else nav.style.display = 'block';
-    });
-
-    /* ----------------
-       Aula Atual (simulação)
-       - Estrutura de horários simples para demonstrar a barra de progresso.
-       - Em produção, esses dados podem vir de uma API em tempo real.
-       ---------------- */
-    const schedule = [
-      {name:'Jiu-Jitsu - Iniciantes', start:'06:00', end:'07:30'},
-      {name:'Muay Thai - Intensivo', start:'08:00', end:'09:00'},
-      {name:'Boxe - Técnicas', start:'10:00', end:'11:00'},
-      {name:'Jiu-Jitsu - Avançado', start:'18:00', end:'19:30'},
-      {name:'Muay Thai - Noite', start:'20:00', end:'21:00'}
-    ];
-
-    // Converte 'HH:MM' -> minutos desde meia-noite
-    function toMinutes(t){ const [h,m]=t.split(':').map(Number); return h*60 + m }
-
-    function updateClassWidget(){
-      const now = new Date();
-      const minutesNow = now.getHours()*60 + now.getMinutes();
-      // procura aula atual
-      let current = null;
-      for(const s of schedule){
-        const start = toMinutes(s.start);
-        const end = toMinutes(s.end);
-        if(minutesNow >= start && minutesNow < end){ current = {...s,start,end}; break }
-      }
-
-      const classNameEl = document.getElementById('className');
-      const classTimeEl = document.getElementById('classTime');
-      const progressBar = document.getElementById('progressBar');
-      const timeLeft = document.getElementById('timeLeft');
-
-      if(current){
-        classNameEl.textContent = current.name;
-        classTimeEl.textContent = `${current.start} - ${current.end}`;
-        const elapsed = minutesNow - current.start;
-        const total = current.end - current.start;
-        const percent = Math.max(0, Math.min(100, Math.round((elapsed/total)*100)));
-        progressBar.style.width = percent + '%';
-
-        const minsLeft = current.end - minutesNow;
-        timeLeft.textContent = minsLeft>0? minsLeft + ' min restantes' : 'Terminando...';
-      } else {
-        classNameEl.textContent = 'Nenhuma aula no momento';
-        classTimeEl.textContent = '--';
-        progressBar.style.width = '0%';
-        timeLeft.textContent = 'Próxima aula em breve';
-      }
-    }
-
-    // Atualiza a cada 20 segundos para manter responsivo em mobile
-    updateClassWidget();
-    setInterval(updateClassWidget, 20000);
-
-    /* ----------------
-       Loja - produtos dummy e filtros
-       - Em produção, consumir uma API e paginar
-       ---------------- */
-    const products = [
-      {id:1,title:'Kimono Competition',type:'kimono',price:'R$ 199,90',img:'/images/prod-kimono.jpg'},
-      {id:2,title:'Luvas Strike',type:'luva',price:'R$ 89,90',img:'/images/prod-luva.jpg'},
-      {id:3,title:'Bandagem Pro',type:'acessorio',price:'R$ 19,90',img:'/images/prod-bandagem.jpg'},
-      {id:4,title:'Kimono Treino',type:'kimono',price:'R$ 149,90',img:'/images/prod-kimono2.jpg'},
-      {id:5,title:'Protetor Bucal',type:'acessorio',price:'R$ 29,90',img:'/images/prod-bucal.jpg'},
-      {id:6,title:'Luvas Bag',type:'luva',price:'R$ 129,90',img:'/images/prod-luva2.jpg'}
-    ];
-
-    const productGrid = document.getElementById('productGrid');
-    const searchInput = document.getElementById('searchProduct');
-    const filterType = document.getElementById('filterType');
-
-    function renderProducts(list){
-      productGrid.innerHTML = '';
-      for(const p of list){
-        const div = document.createElement('div'); div.className='product';
-        div.innerHTML = `
-          <img src="${p.img}" alt="${p.title}" loading="lazy">
-          <div style="font-weight:700;margin-top:0.5rem">${p.title}</div>
-          <div style="margin-top:0.3rem">${p.price}</div>
-          <div style="display:flex;gap:0.4rem;margin-top:0.6rem">
-            <button class="btn">Adicionar</button>
-            <button class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)">Detalhes</button>
-          </div>
-        `;
-        productGrid.appendChild(div);
-      }
-    }
-
-    function filterAndRender(){
-      const q = searchInput.value.trim().toLowerCase();
-      const type = filterType.value;
-      const filtered = products.filter(p => {
-        const matchQ = p.title.toLowerCase().includes(q);
-        const matchType = type === 'all' ? true : p.type === type;
-        return matchQ && matchType;
-      });
-      renderProducts(filtered);
-    }
-
-    searchInput.addEventListener('input', filterAndRender);
-    filterType.addEventListener('change', filterAndRender);
-    // Inicial
-    filterAndRender();
-
-    /* ----------------
-       Galeria - lightbox simples
-       - Cria modal ao clicar numa imagem
-       ---------------- */
-    const photoGallery = document.getElementById('photoGallery');
-    const lightboxRoot = document.getElementById('lightboxRoot');
-
-    photoGallery.addEventListener('click', (e)=>{
-      const img = e.target.closest('img'); if(!img) return;
-      openLightbox(img.src, img.alt);
-    });
-
-    function openLightbox(src, alt){
-      lightboxRoot.innerHTML = '';
-      const div = document.createElement('div'); div.className='lightbox';
-      div.innerHTML = `<img src="${src}" alt="${alt}"><button aria-label='Fechar' style='position:absolute;top:16px;right:16px;background:transparent;border:0;font-size:1.6rem;color:#fff'><i class='fas fa-times'></i></button>`;
-      div.querySelector('button').addEventListener('click', closeLightbox);
-      div.addEventListener('click', (ev)=>{ if(ev.target === div) closeLightbox(); });
-      lightboxRoot.appendChild(div);
-      lightboxRoot.setAttribute('aria-hidden','false');
-    }
-    function closeLightbox(){ lightboxRoot.innerHTML=''; lightboxRoot.setAttribute('aria-hidden','true'); }
-
-    /* ----------------
-       FAQ accordion
-       - Alterna max-height para exibir conteúdo com transição
-       ---------------- */
-    document.querySelectorAll('.faq-item').forEach(item => {
-      const q = item.querySelector('.faq-question');
-      const a = item.querySelector('.faq-answer');
-      q.addEventListener('click', ()=>{
-        const open = q.getAttribute('data-open') === 'true';
-        q.setAttribute('data-open', String(!open));
-        if(!open){
-          a.style.maxHeight = a.scrollHeight + 'px';
-        } else {
-          a.style.maxHeight = 0;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CT Império - Centro de Treinamento de Lutas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset e configurações gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-      });
-    });
 
-    /* ----------------
-       Contato (simulação)
-       - Evitar envio real (sem backend). Mostra toast simples.
-       ---------------- */
-    const contactForm = document.getElementById('contactForm');
-    contactForm.addEventListener('submit', (e)=>{
-      e.preventDefault();
-      const name = document.getElementById('name').value;
-      alert('Obrigado, ' + name + '! Sua mensagem foi recebida (simulação).');
-      contactForm.reset();
-    });
+        :root {
+            --primary: #000000;
+            --secondary: #FFD700;
+            --accent: #FFC107;
+            --light: #FFFFFF;
+            --dark: #1A1A1A;
+            --gray: #333333;
+            --light-gray: #F5F5F5;
+        }
 
-    /* Acessibilidade e pequenas melhorias */
-    // Fechar lightbox com ESC
-    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLightbox(); });
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--light);
+            background-color: var(--primary);
+            overflow-x: hidden;
+        }
 
-    /* Comentário final:
-       - Este é um template front-end single-file. Para produção:
-         * Substituir imagens pelos arquivos otimizados e remotos (CDN)
-         * Trocar o kit do FontAwesome pelo seu próprio kit ou usar SVGs inline
-         * Implementar endpoints para loja e envio de formulário
-         * Implementar versões servidas com compressão (gzip/brotli) e lazy-loading em imagens pesadas
-    */
-  </script></body>
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            position: relative;
+            color: var(--light);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--secondary);
+            color: var(--primary);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--primary);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light);
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-menu {
+            display: flex;
+        }
+
+        .nav-item {
+            margin-left: 30px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: var(--light);
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--light-gray);
+        }
+
+        /* Sobre Nós */
+        .about {
+            background-color: var(--dark);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            color: var(--light-gray);
+        }
+
+        .about-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Professor */
+        .professor {
+            background-color: var(--primary);
+        }
+
+        .professor-card {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--dark);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .professor-image {
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .professor-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .professor-info {
+            padding: 30px;
+        }
+
+        .professor-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+
+        .professor-info p {
+            color: var(--light-gray);
+            margin-bottom: 15px;
+        }
+
+        /* Aula Atual */
+        .current-class {
+            background-color: var(--dark);
+        }
+
+        .class-widget {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--primary);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .class-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .class-title {
+            font-size: 1.5rem;
+            color: var(--light);
+        }
+
+        .class-time {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background-color: var(--gray);
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--secondary);
+            width: 65%;
+            border-radius: 5px;
+            animation: progress-animation 2s ease-in-out infinite;
+        }
+
+        @keyframes progress-animation {
+            0% {
+                width: 65%;
+            }
+            50% {
+                width: 70%;
+            }
+            100% {
+                width: 65%;
+            }
+        }
+
+        .class-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .class-item {
+            text-align: center;
+            padding: 15px;
+            background-color: var(--dark);
+            border-radius: 5px;
+        }
+
+        .class-item i {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        .class-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: var(--light);
+        }
+
+        .class-item p {
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Modalidades */
+        .modalities {
+            background-color: var(--primary);
+        }
+
+        .modalities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .modality-card {
+            background-color: var(--dark);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .modality-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .modality-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .modality-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .modality-card:hover .modality-image img {
+            transform: scale(1.1);
+        }
+
+        .modality-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .modality-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+
+        .modality-content p {
+            color: var(--light-gray);
+            margin-bottom: 15px;
+        }
+
+        /* Loja */
+        .shop {
+            background-color: var(--dark);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--primary);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+
+        .product-info p {
+            color: var(--light-gray);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        /* Galeria */
+        .gallery {
+            background-color: var(--primary);
+        }
+
+        .gallery-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background-color: var(--dark);
+            color: var(--light);
+            border: none;
+            cursor: pointer;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background-color: var(--secondary);
+            color: var(--primary);
+        }
+
+        .gallery-content {
+            display: none;
+        }
+
+        .gallery-content.active {
+            display: block;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            position: relative;
+            height: 200px;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* FAQ */
+        .faq {
+            background-color: var(--dark);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            background-color: var(--primary);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--light);
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: var(--light-gray);
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 20px 20px;
+            max-height: 500px;
+        }
+
+        /* Contato */
+        .contact {
+            background-color: var(--primary);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            width: 40px;
+        }
+
+        .contact-form {
+            background-color: var(--dark);
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--light);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            border: 1px solid var(--gray);
+            border-radius: 5px;
+            color: var(--light);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .map-container {
+            margin-top: 50px;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 400px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--light);
+            position: relative;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--light-gray);
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .social-links a i {
+            color: var(--light);
+            font-size: 1.2rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray);
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .lightbox-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: var(--light);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            color: var(--secondary);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .lightbox-nav button {
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0 20px;
+            transition: color 0.3s ease;
+        }
+
+        .lightbox-nav button:hover {
+            color: var(--secondary);
+        }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: var(--primary);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+                padding: 20px 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-item {
+                margin: 15px 0;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .class-info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .gallery-tabs {
+                flex-wrap: wrap;
+            }
+
+            .tab-btn {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">CT <span>Império</span></a>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="#home" class="nav-link">Início</a></li>
+                    <li class="nav-item"><a href="#about" class="nav-link">Sobre Nós</a></li>
+                    <li class="nav-item"><a href="#modalities" class="nav-link">Modalidades</a></li>
+                    <li class="nav-item"><a href="#shop" class="nav-link">Loja</a></li>
+                    <li class="nav-item"><a href="#gallery" class="nav-link">Galeria</a></li>
+                    <li class="nav-item"><a href="#faq" class="nav-link">FAQ</a></li>
+                    <li class="nav-item"><a href="#contact" class="nav-link">Contato</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Centro de Treinamento <span>Império</span></h1>
+                <p>Desde 2015, ajudamos pessoas a saírem do sedentarismo, cuidarem da saúde e evoluírem no esporte</p>
+                <a href="#about" class="btn">Conheça Nossa História</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre Nós -->
+    <section class="section about" id="about">
+        <div class="container">
+            <h2 class="section-title">Nossa História</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Desde 2015 transformando vidas através das artes marciais</h2>
+                    <p>Desde 2015, ajudamos pessoas a saírem do sedentarismo, cuidarem da saúde e evoluírem no esporte, seja para competir ou simplesmente ter mais qualidade de vida.</p>
+                    <p>Hoje, somos referência no interior paulista, com um trabalho dedicado a crianças e adultos. Venha fazer parte de um dos CTs de lutas que mais se destacam na região!</p>
+                    <a href="#contact" class="btn">Faça Parte</a>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1599058917765-a780eda07a3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="CT Império">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professor -->
+    <section class="section professor">
+        <div class="container">
+            <h2 class="section-title">Nosso Mestre</h2>
+            <div class="professor-card">
+                <div class="professor-image">
+                    <img src="https://images.unsplash.com/photo-1584467735871-8db9ac8d55b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Mestre William Izarias">
+                </div>
+                <div class="professor-info">
+                    <h3>Mestre William Izarias</h3>
+                    <p>Proprietário e Mestre</p>
+                    <p>Com mais de 15 anos de experiência no mundo das artes marciais, Mestre William é referência na região quando o assunto é formação de atletas e promoção da saúde através do esporte.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Aula Atual -->
+    <section class="section current-class">
+        <div class="container">
+            <h2 class="section-title">Aula em Andamento</h2>
+            <div class="class-widget">
+                <div class="class-header">
+                    <h3 class="class-title">Muay Thai - Turma Mista</h3>
+                    <div class="class-time">19:00 - 20:30</div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar"></div>
+                </div>
+                <div class="class-info">
+                    <div class="class-item">
+                        <i class="fas fa-users"></i>
+                        <h4>Turma Mista</h4>
+                        <p>Homens e Mulheres</p>
+                    </div>
+                    <div class="class-item">
+                        <i class="fas fa-user-tie"></i>
+                        <h4>Professor</h4>
+                        <p>Mestre William</p>
+                    </div>
+                    <div class="class-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h4>Local</h4>
+                        <p>Área Principal</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modalidades -->
+    <section class="section modalities" id="modalities">
+        <div class="container">
+            <h2 class="section-title">Nossas Modalidades</h2>
+            <div class="modalities-grid">
+                <div class="modality-card">
+                    <div class="modality-image">
+                        <img src="https://images.unsplash.com/photo-1594911470671-35d792f6011a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Jiu-Jitsu">
+                    </div>
+                    <div class="modality-content">
+                        <h3>Jiu-Jitsu</h3>
+                        <p>Arte marcial de origem japonesa que utiliza técnicas de alavancas e torções para derrubar e dominar um oponente.</p>
+                        <a href="#contact" class="btn">Saiba Mais</a>
+                    </div>
+                </div>
+                <div class="modality-card">
+                    <div class="modality-image">
+                        <img src="https://images.unsplash.com/photo-1614624532983-1fe212c9f7f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Muay Thai">
+                    </div>
+                    <div class="modality-content">
+                        <h3>Muay Thai</h3>
+                        <p>Arte marcial tailandesa que utiliza socos, chutes, cotoveladas e joelhadas, conhecida como "a arte das oito armas".</p>
+                        <a href="#contact" class="btn">Saiba Mais</a>
+                    </div>
+                </div>
+                <div class="modality-card">
+                    <div class="modality-image">
+                        <img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Boxe">
+                    </div>
+                    <div class="modality-content">
+                        <h3>Boxe</h3>
+                        <p>Esporte de combate que utiliza apenas os punhos, desenvolvendo agilidade, coordenação motora e condicionamento físico.</p>
+                        <a href="#contact" class="btn">Saiba Mais</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loja -->
+    <section class="section shop" id="shop">
+        <div class="container">
+            <h2 class="section-title">Nossa Loja</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1589330694651-26a4d84b9d74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Kimono Jiu-Jitsu">
+                    </div>
+                    <div class="product-info">
+                        <h3>Kimono Jiu-Jitsu</h3>
+                        <p>Kimono profissional para treinos e competições de Jiu-Jitsu.</p>
+                        <div class="product-price">
+                            <span class="price">R$ 249,90</span>
+                            <a href="#" class="btn">Comprar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1594736797933-d0ea3ff8db41?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Luvas de Muay Thai">
+                    </div>
+                    <div class="product-info">
+                        <h3>Luvas de Muay Thai</h3>
+                        <p>Luvas profissionais para treino de Muay Thai e Boxe.</p>
+                        <div class="product-price">
+                            <span class="price">R$ 159,90</span>
+                            <a href="#" class="btn">Comprar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1594736797933-d0ea3ff8db41?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Protetor Bucal">
+                    </div>
+                    <div class="product-info">
+                        <h3>Protetor Bucal</h3>
+                        <p>Protetor bucal profissional para treinos e competições.</p>
+                        <div class="product-price">
+                            <span class="price">R$ 29,90</span>
+                            <a href="#" class="btn">Comprar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1589330694651-26a4d84b9d74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Faixa de Jiu-Jitsu">
+                    </div>
+                    <div class="product-info">
+                        <h3>Faixa de Jiu-Jitsu</h3>
+                        <p>Faixa oficial para graduação no Jiu-Jitsu.</p>
+                        <div class="product-price">
+                            <span class="price">R$ 39,90</span>
+                            <a href="#" class="btn">Comprar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeria -->
+    <section class="section gallery" id="gallery">
+        <div class="container">
+            <h2 class="section-title">Galeria</h2>
+            <div class="gallery-tabs">
+                <button class="tab-btn active" data-tab="events">Eventos</button>
+                <button class="tab-btn" data-tab="teams">Equipes</button>
+                <button class="tab-btn" data-tab="videos">Vídeos</button>
+            </div>
+            
+            <div class="gallery-content active" id="events">
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1544467735871-8db9ac8d55b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Evento 1">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1599058917765-a780eda07a3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="Evento 2">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1594911470671-35d792f6011a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Evento 3">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1614624532983-1fe212c9f7f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Evento 4">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-content" id="teams">
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Equipe 1">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1584467735871-8db9ac8d55b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Equipe 2">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1599058917765-a780eda07a3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="Equipe 3">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1594911470671-35d792f6011a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Equipe 4">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-content" id="videos">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/0GzzFeS5cMc" title="Vídeo Educativo de Jiu-Jitsu" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/0GzzFeS5cMc" title="Vídeo Educativo de Muay Thai" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section faq" id="faq">
+        <div class="container">
+            <h2 class="section-title">Perguntas Frequentes</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Preciso ter experiência para começar?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Não, não é necessário ter experiência prévia. Nossas aulas são adaptadas para todos os níveis, desde iniciantes até atletas avançados. Temos turmas específicas para iniciantes onde você aprenderá desde os fundamentos básicos.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Qual a idade mínima para treinar?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Oferecemos aulas para crianças a partir dos 5 anos de idade. Para os pequenos, temos aulas lúdicas que desenvolvem coordenação motora, disciplina e autoconfiança, sempre com segurança e supervisão adequada.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Quais os horários de funcionamento?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Funcionamos de segunda a sexta das 6h às 22h, e aos sábados das 8h às 12h. Oferecemos horários variados para atender diferentes rotinas, incluindo turmas pela manhã, tarde e noite.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Preciso de equipamento especial para começar?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Para as primeiras aulas, apenas roupas confortáveis de exercício são suficientes. Após decidir continuar, orientamos sobre o equipamento adequado para cada modalidade. Temos equipamentos disponíveis para aluguel e venda em nossa loja.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Oferecem aulas experimentais?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sim, oferecemos uma aula experimental gratuita para que você possa conhecer nossa estrutura, metodologia e professores antes de se matricular. Entre em contato para agendar sua aula experimental.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Entre em Contato</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>Endereço</h3>
+                            <p>Rua das Artes Marciais, 123<br>Centro, São Paulo - SP</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Telefone</h3>
+                            <p>(11) 9999-9999</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>E-mail</h3>
+                            <p>contato@ctimperio.com.br</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3>Horário de Funcionamento</h3>
+                            <p>Segunda a Sexta: 6h às 22h<br>Sábado: 8h às 12h</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nome</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Telefone</label>
+                            <input type="tel" id="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mensagem</label>
+                            <textarea id="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Enviar Mensagem</button>
+                    </form>
+                </div>
+            </div>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.097417742593!2d-46.65390528440708!3d-23.565435067642267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da0aa315%3A0xd59f9431f2c9776a!2sAv.%20Paulista%2C%20S%C3%A3o%20Paulo%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1633023226789!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>CT Império</h3>
+                    <p>Desde 2015, ajudamos pessoas a saírem do sedentarismo, cuidarem da saúde e evoluírem no esporte.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#about">Sobre Nós</a></li>
+                        <li><a href="#modalities">Modalidades</a></li>
+                        <li><a href="#shop">Loja</a></li>
+                        <li><a href="#gallery">Galeria</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Modalidades</h3>
+                    <ul>
+                        <li><a href="#">Jiu-Jitsu</a></li>
+                        <li><a href="#">Muay Thai</a></li>
+                        <li><a href="#">Boxe</a></li>
+                        <li><a href="#">Karatê</a></li>
+                        <li><a href="#">Judô</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contato</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Rua das Artes Marciais, 123</li>
+                        <li><i class="fas fa-phone"></i> (11) 9999-9999</li>
+                        <li><i class="fas fa-envelope"></i> contato@ctimperio.com.br</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 CT Império - Todos os direitos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close">&times;</span>
+            <img src="" alt="">
+            <div class="lightbox-nav">
+                <button class="lightbox-prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="lightbox-next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Menu Hamburguer
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }));
+
+        // Accordion FAQ
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                // Fecha todos os outros itens
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                
+                // Abre/fecha o item atual
+                item.classList.toggle('active');
+            });
+        });
+
+        // Galeria com Tabs
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const galleryContents = document.querySelectorAll('.gallery-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove a classe active de todas as abas e conteúdos
+                tabBtns.forEach(b => b.classList.remove('active'));
+                galleryContents.forEach(content => content.classList.remove('active'));
+                
+                // Adiciona a classe active à aba clicada
+                btn.classList.add('active');
+                
+                // Mostra o conteúdo correspondente
+                const tabId = btn.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Lightbox para Galeria
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightbox = document.querySelector('.lightbox');
+        const lightboxImg = lightbox.querySelector('img');
+        const lightboxClose = lightbox.querySelector('.lightbox-close');
+        const lightboxPrev = lightbox.querySelector('.lightbox-prev');
+        const lightboxNext = lightbox.querySelector('.lightbox-next');
+
+        let currentImageIndex = 0;
+        const images = Array.from(galleryItems).map(item => item.querySelector('img').src);
+
+        galleryItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                currentImageIndex = index;
+                updateLightboxImage();
+                lightbox.classList.add('active');
+            });
+        });
+
+        function updateLightboxImage() {
+            lightboxImg.src = images[currentImageIndex];
+        }
+
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+
+        lightboxPrev.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            updateLightboxImage();
+        });
+
+        lightboxNext.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            updateLightboxImage();
+        });
+
+        // Fechar lightbox ao clicar fora da imagem
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+            }
+        });
+
+        // Formulário de Contato
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Aqui você normalmente enviaria os dados para um servidor
+            // Por enquanto, apenas mostraremos um alerta
+            alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
+            contactForm.reset();
+        });
+
+        // Scroll suave para âncoras
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
 </html>
